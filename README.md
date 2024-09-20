@@ -1,1 +1,64 @@
-# mdrn-website-new
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mdrn - Modern Music Streaming</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+        .btn {
+            display: inline-block;
+            background: #333;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>mdrn</h1>
+        <p>Your Modern Music Streaming Experience</p>
+    </header>
+
+    <div class="container">
+        <h2>Welcome to mdrn</h2>
+        <p>Discover, stream, and enjoy your favorite music like never before.</p>
+        <a href="#" class="btn">Start Listening Now</a>
+    </div>
+
+    <div class="container">
+        <h2>Features</h2>
+        <ul>
+            <li>Vast library of songs across all genres</li>
+            <li>Personalized playlists and recommendations</li>
+            <li>High-quality audio streaming</li>
+            <li>Offline listening mode</li>
+            <li>Seamless integration across devices</li>
+        </ul>
+    </div>
+
+    <footer>
+        <p>&copy; 2023 mdrn. All rights reserved.</p>
+    </footer>
+</body>
+</html>
