@@ -1,3 +1,5 @@
+
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
@@ -19,19 +21,18 @@ body {
 }
 
 h1 {
-    font-size: 6em;
+    font-size: 8em; /* Tamaño de fuente más grande */
     color: #f0f0f0; /* Color del texto igual al fondo */
     text-shadow: -5px -5px 15px  #ffffff5a, 5px 5px 15px #a3b1c665;
     transition: text-shadow 0.3s ease; /* Transición suave */
-
+    margin-bottom: 10px; /* Reducir el margen inferior */
 }
-
 
 form {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 0; /* Eliminar el margen superior */
 }
 
 .email-input {
@@ -39,7 +40,8 @@ form {
     font-size: 1.2em; /* Tamaño de fuente más grande */
     border-radius: 25px; /* Esquinas redondeadas */
     border: none;
-    box-shadow: -5px -5px 15px  #ffffff9e, 5px 5px 15px #a3b1c6a8; /* Sombra */
+    background-color: #e0e0e0; /* Fondo un poco más gris que el fondo */
+    box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6); /* Sombra con menor opacidad */
     outline: none;
     margin-right: 10px; /* Espacio entre el campo de texto y el botón */
 }
@@ -51,13 +53,13 @@ form {
     border: none;
     background-color: #333; /* Color de fondo del botón */
     color: #f0f0f0; /* Color del texto del botón */
-    box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #a3b1c6a8; /* Sombra */
+    box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6); /* Sombra con menor opacidad */
     cursor: pointer;
     transition: box-shadow 0.3s ease; /* Transición suave */
 }
 
 .send-button:hover {
-    box-shadow: 5px 5px 15px 0px #ffffff9e, -5px -5px 15px 0px #a3b1c6a8; /* Sombra invertida en hover */
+    box-shadow: 5px 5px 15px rgba(255, 255, 255, 0.6), -5px -5px 15px rgba(163, 177, 198, 0.6); /* Sombra invertida en hover */
 }
 
 .background {
@@ -79,37 +81,38 @@ form {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    transition: width 0.5s ease, height 0.5s ease; /* Transición suave para el tamaño */
 }
 
 .circle1 {
-    width: 25vmin; /* Tamaño aumentado */
-    height: 25vmin; /* Tamaño aumentado */
+    width: 35vmin; /* Tamaño aumentado */
+    height: 35vmin; /* Tamaño aumentado */
     background: radial-gradient(circle, #FF00FF, #00FFFF); /* Degradado radial */
     animation: orbit1 15s infinite linear;
 }
 
 .circle2 {
-    width: 30vmin; /* Tamaño ajustado */
-    height: 30vmin; /* Tamaño ajustado */
+    width: 40vmin; /* Tamaño ajustado */
+    height: 40vmin; /* Tamaño ajustado */
     background: radial-gradient(circle, #FF4500, #1E90FF); /* Nueva combinación de colores */
     animation: orbit2 20s infinite ease-in-out alternate;
 }
 
 .circle3 {
-    width: 30vmin; /* Tamaño aumentado */
-    height: 30vmin; /* Tamaño aumentado */
+    width: 40vmin; /* Tamaño aumentado */
+    height: 40vmin; /* Tamaño aumentado */
     background: radial-gradient(circle, #FFFF00, #00c3ff); /* Degradado radial */
     animation: orbit3 18s infinite ease-in-out;
 }
 
 .circle4 {
-    width: 20vmin; /* Tamaño aumentado */
-    height: 20vmin; /* Tamaño aumentado */
+    width: 30vmin; /* Tamaño aumentado */
+    height: 30vmin; /* Tamaño aumentado */
     background: radial-gradient(circle, #FFD700, #8A2BE2); /* Degradado radial */
     animation: orbit4 22s infinite ease-in-out alternate-reverse;
 }
 
-/* Trayectorias variadas */
+/* Trayectorias menos dispersas */
 @keyframes orbit1 {
     0% { transform: translate(-50%, -50%) translate(0, 0); }
     25% { transform: translate(-50%, -50%) translate(10vmin, 5vmin); }
@@ -142,3 +145,40 @@ form {
     100% { transform: translate(-50%, -50%) translate(0, 0); }
 }
 
+/* Estilos para los botones del reproductor de audio */
+.audio-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1em 0;
+}
+
+.neu {
+    box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #a3b1c6a8;
+    background: #e0e5ec;
+    border-radius: 2em;
+    border: 0;
+}
+
+.btn {
+    padding: 15px;
+    margin: 5px;
+    border-radius: 30px;
+    color: #7e8a98;
+    outline: none;
+    cursor: pointer;
+    &.lg {
+        font-size: 1em;
+    }
+    &:active {
+        cursor: pointer;
+        box-shadow: inset -5px -5px 15px 0px #ffffff9e, inset 5px 5px 15px 0px #a3b1c6a8;
+    }
+}
