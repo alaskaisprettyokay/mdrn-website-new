@@ -21,7 +21,43 @@ body {
 h1 {
     font-size: 6em;
     color: #f0f0f0; /* Color del texto igual al fondo */
-    text-shadow: 2px 2px 10px rgba(227, 227, 227, 1); /* Sombra del texto */
+    text-shadow: -5px -5px 15px  #ffffff5a, 5px 5px 15px #a3b1c665;
+    transition: text-shadow 0.3s ease; /* Transición suave */
+
+}
+
+
+form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.email-input {
+    padding: 15px 20px; /* Más padding */
+    font-size: 1.2em; /* Tamaño de fuente más grande */
+    border-radius: 25px; /* Esquinas redondeadas */
+    border: none;
+    box-shadow: -5px -5px 15px  #ffffff9e, 5px 5px 15px #a3b1c6a8; /* Sombra */
+    outline: none;
+    margin-right: 10px; /* Espacio entre el campo de texto y el botón */
+}
+
+.send-button {
+    padding: 15px 20px; /* Más padding */
+    font-size: 1.2em; /* Tamaño de fuente más grande */
+    border-radius: 25px; /* Esquinas redondeadas */
+    border: none;
+    background-color: #333; /* Color de fondo del botón */
+    color: #f0f0f0; /* Color del texto del botón */
+    box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #a3b1c6a8; /* Sombra */
+    cursor: pointer;
+    transition: box-shadow 0.3s ease; /* Transición suave */
+}
+
+.send-button:hover {
+    box-shadow: 5px 5px 15px 0px #ffffff9e, -5px -5px 15px 0px #a3b1c6a8; /* Sombra invertida en hover */
 }
 
 .background {
@@ -55,7 +91,7 @@ h1 {
 .circle2 {
     width: 30vmin; /* Tamaño ajustado */
     height: 30vmin; /* Tamaño ajustado */
-    background: radial-gradient(circle, #ffaa00, #1eff9e); /* Nueva combinación de colores */
+    background: radial-gradient(circle, #FF4500, #1E90FF); /* Nueva combinación de colores */
     animation: orbit2 20s infinite ease-in-out alternate;
 }
 
