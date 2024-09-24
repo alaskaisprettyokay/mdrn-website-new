@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #f0f0f0; /* Fondo gris claro */
+    font-family: 'Poppins', sans-serif; /* Fuente Poppins */
+}
+
+.container {
+    text-align: center;
+    z-index: 1;
+    position: relative;
+}
+
+h1 {
+    font-size: 6em;
+    color: #f0f0f0; /* Color del texto igual al fondo */
+    text-shadow: 2px 2px 10px rgba(227, 227, 227, 1); /* Sombra del texto */
+}
+
+.background {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vmin;
+    height: 80vmin;
+    z-index: 0;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.7;
+    filter: blur(30px);
+    mix-blend-mode: screen; /* Mezcla aditiva */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.circle1 {
+    width: 25vmin; /* Tamaño aumentado */
+    height: 25vmin; /* Tamaño aumentado */
+    background: radial-gradient(circle, #FF00FF, #00FFFF); /* Degradado radial */
+    animation: orbit1 15s infinite linear;
+}
+
+.circle2 {
+    width: 30vmin; /* Tamaño ajustado */
+    height: 30vmin; /* Tamaño ajustado */
+    background: radial-gradient(circle, #ffaa00, #1eff9e); /* Nueva combinación de colores */
+    animation: orbit2 20s infinite ease-in-out alternate;
+}
+
+.circle3 {
+    width: 30vmin; /* Tamaño aumentado */
+    height: 30vmin; /* Tamaño aumentado */
+    background: radial-gradient(circle, #FFFF00, #00c3ff); /* Degradado radial */
+    animation: orbit3 18s infinite ease-in-out;
+}
+
+.circle4 {
+    width: 20vmin; /* Tamaño aumentado */
+    height: 20vmin; /* Tamaño aumentado */
+    background: radial-gradient(circle, #FFD700, #8A2BE2); /* Degradado radial */
+    animation: orbit4 22s infinite ease-in-out alternate-reverse;
+}
+
+/* Trayectorias variadas */
+@keyframes orbit1 {
+    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    25% { transform: translate(-50%, -50%) translate(10vmin, 5vmin); }
+    50% { transform: translate(-50%, -50%) translate(0, 10vmin); }
+    75% { transform: translate(-50%, -50%) translate(-10vmin, 5vmin); }
+    100% { transform: translate(-50%, -50%) translate(0, 0); }
+}
+
+@keyframes orbit2 {
+    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    25% { transform: translate(-50%, -50%) translate(15vmin, -10vmin); }
+    50% { transform: translate(-50%, -50%) translate(0, -20vmin); }
+    75% { transform: translate(-50%, -50%) translate(-15vmin, -10vmin); }
+    100% { transform: translate(-50%, -50%) translate(0, 0); }
+}
+
+@keyframes orbit3 {
+    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    25% { transform: translate(-50%, -50%) translate(8vmin, 12vmin); }
+    50% { transform: translate(-50%, -50%) translate(0, 16vmin); }
+    75% { transform: translate(-50%, -50%) translate(-8vmin, 12vmin); }
+    100% { transform: translate(-50%, -50%) translate(0, 0); }
+}
+
+@keyframes orbit4 {
+    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    25% { transform: translate(-50%, -50%) translate(12vmin, -8vmin); }
+    50% { transform: translate(-50%, -50%) translate(0, -16vmin); }
+    75% { transform: translate(-50%, -50%) translate(-12vmin, -8vmin); }
+    100% { transform: translate(-50%, -50%) translate(0, 0); }
+}
+
