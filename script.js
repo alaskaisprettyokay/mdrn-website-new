@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let audioContext, analyser, dataArray, source;
 
+    // Definimos los tamaños iniciales de los círculos
+    const initialSizes = [35, 40, 40, 30]; // Ajusta estos valores según tus preferencias
+
     function setupAudioContext() {
         audioContext = new (window.AudioContext || window.webkitAudioContext)();
         analyser = audioContext.createAnalyser();
@@ -21,11 +24,22 @@ document.addEventListener('DOMContentLoaded', function() {
     function animateCircles() {
         analyser.getByteFrequencyData(dataArray);
 
-        // Asignar diferentes frecuencias a cada círculo
-        const frequencies = [5, 15, 25, 35];
+        // Definir rangos de frecuencias para cada círculo
+        const frequencyRanges = [
+            { start: 0, end: 10 },    // Bajas frecuencias
+            { start: 11, end: 30 },   // Medias-bajas frecuencias
+            { start: 31, end: 60 },   // Medias-altas frecuencias
+            { start: 61, end: 100 }   // Altas frecuencias
+        ];
+
         circles.forEach((circle, index) => {
-            const frequency = dataArray[frequencies[index]];
-            const size = (frequency / 255) * 40 + 30; // Ajustar el tamaño del círculo
+            const range = frequencyRanges[index];
+            let sum = 0;
+            for (let i = range.start; i <= range.end; i++) {
+                sum += dataArray[i];
+            }
+            const average = sum / (range.end - range.start + 1);
+            const size = (average / 255) * 40 + initialSizes[index]; // Ajustar el tamaño del círculo
             circle.style.width = `${size}vmin`;
             circle.style.height = `${size}vmin`;
         });
@@ -51,11 +65,22 @@ document.addEventListener('DOMContentLoaded', function() {
         audio.pause();
         audio.currentTime = 0;
         playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+        // Restauramos los círculos a sus tamaños iniciales
+        circles.forEach((circle, index) => {
+            circle.style.width = `${initialSizes[index]}vmin`;
+            circle.style.height = `${initialSizes[index]}vmin`;
+        });
     });
 
     // Asegúrate de que el audio se reproduzca en bucle
     audio.addEventListener('ended', function() {
         audio.currentTime = 0;
         audio.play();
+    });
+
+    // Inicializamos los círculos con sus tamaños iniciales
+    circles.forEach((circle, index) => {
+        circle.style.width = `${initialSizes[index]}vmin`;
+        circle.style.height = `${initialSizes[index]}vmin`;
     });
 });
