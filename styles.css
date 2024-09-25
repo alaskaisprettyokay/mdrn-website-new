@@ -30,7 +30,7 @@ h1 {
 
 .coming-soon {
     font-size: 1.5em;
-    color: #4a4c5e;
+    color: #343434;
     margin-top: 0;
     margin-bottom: 20px;
     opacity: 0.8;
@@ -113,12 +113,14 @@ form {
     position: absolute;
     border-radius: 50%;
     opacity: 0.7;
+    transition: opacity 2s ease-in-out; /* Transición más larga y suave */
     filter: blur(30px);
     mix-blend-mode: screen; /* Mezcla aditiva */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     transition: width 0.5s ease, height 0.5s ease; /* Transición suave para el tamaño */
+    animation: fadeIn 2s ease-in-out forwards;
 }
 
 .circle1 {
@@ -298,3 +300,39 @@ form {
 }
 
 /* ... resto de los estilos ... */
+
+.email-input, .send-button {
+    transition: all 0.5s ease;
+}
+
+.shrink {
+    /*width: 30px;
+    padding: 0;
+    margin: 0;*/
+    opacity: 0;
+    overflow: hidden;
+}
+
+.confirmation-text {
+    font-size: 1.2em;
+    color: #343434;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    height: 40px;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+.typing {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: typing 2s steps(30, end);
+}

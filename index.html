@@ -23,10 +23,11 @@
         </div>
         <p class="coming-soon">Coming Soon</p>
         <h1>MDRN</h1>
-        <form>
-            <input type="email" placeholder="Sign to the mailing list" class="email-input"y>
-            <button type="submit" class="send-button">Get Notified</button>
+        <form id="email-form">
+            <input type="email" placeholder="Sign to the mailing list" class="email-input" id="email-input">
+            <button type="submit" class="send-button" id="send-button">Send</button>
         </form>
+        <div id="confirmation-text" class="confirmation-text hidden">Signed on the mail list</div>
         <!-- Contenedor del reproductor de audio -->
         <div class="audio-player">
             <audio id="audio" src="audio/f2-ride-party.mp3"></audio>
