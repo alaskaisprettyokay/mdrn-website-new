@@ -23,7 +23,7 @@ h1 {
     color: #28272b; /* Color del texto igual al fondo */
     text-shadow: -5px -5px 15px  #ffffff5a, 5px 5px 15px #a3b1c665;
     transition: text-shadow 0.3s ease; /* Transición suave */
-    margin: 50px 20px 10px 20px;
+    margin: 10px 20px 30px 20px;
     font-weight: 700; /* Añadido para usar la versión bold de Montserrat */
     line-height: 0.9; /* Añadimos esta línea para reducir el interlineado */
 }
