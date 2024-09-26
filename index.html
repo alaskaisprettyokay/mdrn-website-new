@@ -1,64 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mdrn - Modern Music Streaming</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 1rem;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 2rem 0;
-        }
-        .btn {
-            display: inline-block;
-            background: #333;
-            color: #fff;
-            padding: 0.5rem 1rem;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-    </style>
+    <title>Animación con Círculos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
-    <header>
-        <h1>mdrn</h1>
-        <p>Your Modern Music Streaming Experience</p>
-    </header>
-
     <div class="container">
-        <h2>Welcome to mdrn</h2>
-        <p>Discover, stream, and enjoy your favorite music like never before.</p>
-        <a href="#" class="btn">Start Listening Now</a>
+        <div class="social-buttons">
+            <a href="https://x.com/mdrnprotocol" target="_blank" class="btn lg neu">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/christopher-rose-mdrn" target="_blank" class="btn lg neu">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
+        <p class="coming-soon">Coming Soon</p>
+        <h1>MDRN</h1>
+        <form id="email-form">
+            <input type="email" placeholder="Sign up for updates..." class="email-input" id="email-input">
+            <button type="submit" class="send-button" id="send-button">Send</button>
+        </form>
+        <div id="confirmation-text" class="confirmation-text hidden">Talk to you soon...</div>
+        <!-- Contenedor del reproductor de audio -->
+        <div class="audio-player">
+            <audio id="audio" src="audio/f2-ride-party.mp3"></audio>
+            <div class="buttons">
+                <button id="play-pause" class="btn lg neu"><i class="fas fa-play"></i></button>
+                <button id="stop" class="btn lg neu"><i class="fas fa-stop"></i></button>
+            </div>
+        </div>
     </div>
-
-    <div class="container">
-        <h2>Features</h2>
-        <ul>
-            <li>Vast library of songs across all genres</li>
-            <li>Personalized playlists and recommendations</li>
-            <li>High-quality audio streaming</li>
-            <li>Offline listening mode</li>
-            <li>Seamless integration across devices</li>
-        </ul>
+    <div class="background">
+        <div class="circle circle1"></div>
+        <div class="circle circle2"></div>
+        <div class="circle circle3"></div>
+        <div class="circle circle4"></div>
     </div>
-
-    <footer>
-        <p>&copy; 2023 mdrn. All rights reserved.</p>
-    </footer>
+    <div class="alchemical-symbol-container">
+        <svg class="alchemical-symbol outer" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Círculo exterior -->
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#D0EBFB" stroke-width="1" stroke-opacity="0.5"/>
+            
+            <!-- Hexagrama (estrella de seis puntas) -->
+            <polygon points="50,5 72.5,27.5 95,50 72.5,72.5 50,95 27.5,72.5 5,50 27.5,27.5" fill="none" stroke="#D0EBFB" stroke-width="1" stroke-opacity="0.5"/>
+        </svg>
+        
+        <svg class="alchemical-symbol inner" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Círculo interior -->
+            <circle cx="50" cy="50" r="25" fill="none" stroke="#D0EBFB" stroke-width="1" stroke-opacity="0.2"/>
+            
+            <!-- Triángulos equiláteros -->
+            <polygon points="50,25 70.7,62.5 29.3,62.5" fill="none" stroke="#D0EBFB" stroke-width="1" stroke-opacity="0.2"/>
+            <polygon points="50,75 70.7,37.5 29.3,37.5" fill="none" stroke="#D0EBFB" stroke-width="1" stroke-opacity="0.2"/>
+            
+        </svg>
+    </div>
+    <script src="script.js"></script>
 </body>
+
 </html>
