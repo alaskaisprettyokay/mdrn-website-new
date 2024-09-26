@@ -8,7 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: #f0f0f0; /* Fondo gris claro */
+    background-color: #111419; /* Fondo gris claro */
     font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
 }
 
@@ -20,8 +20,8 @@ body {
 
 h1 {
     font-size: 8em; /* Tamaño de fuente más grande */
-    color: #28272b; /* Color del texto igual al fondo */
-    text-shadow: -5px -5px 15px  #ffffff5a, 5px 5px 15px #a3b1c665;
+    color: #051032; /* Color del texto igual al fondo */
+    text-shadow: -5px -5px 15px  #D0EBFB, 5px 5px 15px #0C2151;
     transition: text-shadow 0.3s ease; /* Transición suave */
     margin: 10px 20px 30px 20px;
     font-weight: 700; /* Añadido para usar la versión bold de Montserrat */
@@ -30,7 +30,7 @@ h1 {
 
 .coming-soon {
     font-size: 1.5em;
-    color: #343434;
+    color: #111419;
     margin-top: 0;
     margin-bottom: 20px;
     opacity: 0.8;
@@ -59,7 +59,7 @@ form {
     font-size: 1.2em;
     border-radius: 25px;
     border: none;
-    background-color: #333;
+    background-color: #051032;
     color: #f0f0f0;
     box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6);
     cursor: pointer;
@@ -200,6 +200,7 @@ form {
     flex-direction: row;
     justify-content: space-around;
     padding: 1em 0;
+    opacity: .8;
 }
 
 .neu {
@@ -297,6 +298,7 @@ form {
     justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
+    opacity: .8;
 }
 
 /* ... resto de los estilos ... */
