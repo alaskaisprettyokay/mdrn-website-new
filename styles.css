@@ -19,9 +19,9 @@ body {
 }
 
 h1 {
-    font-size: 8em; /* Tamaño de fuente más grande */
-    color: #051032; /* Color del texto igual al fondo */
-    text-shadow: -5px -5px 15px  #D0EBFB, 5px 5px 15px #0C2151;
+    font-size: 9em; /* Tamaño de fuente más grande */
+    color: #111419; /* Color del texto igual al fondo */
+    text-shadow: -5px -5px 15px  #d0ebfb9b, 5px 5px 15px #2d354221;
     transition: text-shadow 0.3s ease; /* Transición suave */
     margin: 10px 20px 30px 20px;
     font-weight: 700; /* Añadido para usar la versión bold de Montserrat */
@@ -59,7 +59,7 @@ form {
     font-size: 1.2em;
     border-radius: 25px;
     border: none;
-    background-color: #051032;
+    background-color: #111419;
     color: #f0f0f0;
     box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6);
     cursor: pointer;
@@ -200,12 +200,12 @@ form {
     flex-direction: row;
     justify-content: space-around;
     padding: 1em 0;
-    opacity: .8;
+   /* opacity: .8; */
 }
 
 .neu {
-    box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #a3b1c6a8;
-    background: #f0f0f0;
+    box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #97a4b8a8;
+    background: #d0d0d0 ;
     border-radius: 2em;
     border: 0;
 }
@@ -263,10 +263,12 @@ form {
 
 .alchemical-symbol.outer {
     animation: rotate-clockwise 20s linear infinite;
+    opacity: 0.5;
 }
 
 .alchemical-symbol.inner {
     animation: rotate-counterclockwise 15s linear infinite;
+    opacity: 0.2;
 }
 
 @keyframes rotate-clockwise {
@@ -298,7 +300,7 @@ form {
     justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
-    opacity: .8;
+    /*opacity: .8; */
 }
 
 /* ... resto de los estilos ... */
@@ -337,4 +339,26 @@ form {
     overflow: hidden;
     white-space: nowrap;
     animation: typing 2s steps(30, end);
+}
+
+@font-face {
+    font-family: 'TwitterXIcon';
+    src: url('font/twitter_x.woff2') format('woff2'),
+        url('font/twitter_x.woff') format('woff'),
+        url('font/twitter_x.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.twitter-x-icon:before {
+    font-family: 'TwitterXIcon';
+    content: '\e800';
+    /* Ajusta este valor al código correcto del icono */
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
