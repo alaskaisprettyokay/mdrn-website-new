@@ -310,11 +310,8 @@ form {
 }
 
 .shrink {
-    /*width: 30px;
-    padding: 0;
-    margin: 0;*/
-    opacity: 0;
-    overflow: hidden;
+    transform: scale(0);
+    transition: transform 0.5s ease;
 }
 
 .confirmation-text {
@@ -329,16 +326,18 @@ form {
     display: none;
 }
 
-@keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
+.typing {
+    animation: typing 2s steps(22), blink-caret 0.75s step-end infinite;
 }
 
-.typing {
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 2s steps(30, end);
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: orange; }
 }
 
 @font-face {
