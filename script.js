@@ -104,10 +104,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Mostrar y animar el texto de confirmación
             confirmationText.classList.remove('hidden');
-          //  setTimeout(() => {
-                confirmationText.style.opacity = '1';
-                confirmationText.classList.add('typing');
-          //  }, 50);
+            confirmationText.style.opacity = '1';
+            confirmationText.classList.add('typing');
         }, 500);
+
+        // Submit the form
+        form.submit();
     });
 });
