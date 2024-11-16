@@ -8,7 +8,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background-color: #111419; /* Fondo gris claro */
+    background-color: #13161b; /* Fondo gris claro */
     font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
 }
 
@@ -49,7 +49,7 @@ form {
     border-radius: 25px; /* Esquinas redondeadas */
     border: none;
     background-color: #e0e0e0; /* Fondo un poco más gris que el fondo */
-    box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6); /* Sombra con menor opacidad */
+    /*box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6); /* Sombra con menor opacidad */
     outline: none;
     margin-right: 10px; /* Espacio entre el campo de texto y el botón */
 }
@@ -61,7 +61,7 @@ form {
     border: none;
     background-color: #111419;
     color: #f0f0f0;
-    box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6);
+    /*box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6);*/
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -82,7 +82,7 @@ form {
 }
 
 .send-button:hover::before {
-    opacity: 0.7; /* Reducimos la opacidad para que el texto sea más visible */
+    opacity: 0.3; /* Reducimos la opacidad para que el texto sea más visible */
 }
 
 .send-button:hover {
@@ -112,7 +112,7 @@ form {
 .circle {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.7;
+    opacity: 0.5;
     transition: opacity 2s ease-in-out; /* Transición más larga y suave */
     filter: blur(30px);
     mix-blend-mode: screen; /* Mezcla aditiva */
@@ -204,7 +204,7 @@ form {
 }
 
 .neu {
-    box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #97a4b8a8;
+    /*box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #97a4b8a8;*/
     background: #d0d0d0 ;
     border-radius: 2em;
     border: 0;
@@ -234,13 +234,13 @@ form {
 
 .btn:hover {
     color: #5a6674;
-    box-shadow: -2px -2px 5px #ffffff, 2px 2px 5px #babecc;
+    /*box-shadow: -2px -2px 5px #ffffff, 2px 2px 5px #babecc;*/
 }
 
 .btn:active {
     cursor: pointer;
-    box-shadow: inset -5px -5px 15px 0px #ffffff9e, inset 5px 5px 15px 0px #a3b1c6a8;
-}
+    /*box-shadow: inset -5px -5px 15px 0px #ffffff9e, inset 5px 5px 15px 0px #a3b1c6a8*/
+    }
 
 .alchemical-symbol-container {
     position: absolute;
