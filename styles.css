@@ -380,8 +380,18 @@ form {
     }
 
     .email-input, .send-button {
-        width: 80%;
+        height: 50px; /* Aseguramos que ambos elementos tengan la misma altura */
+        box-sizing: border-box;
+        padding: 0 20px; /* Ajustamos el padding vertical */
+        line-height: 50px; /* Centramos el texto verticalmente */
+    }
+
+    .send-button {
+        width: 40%;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .social-icons {
@@ -443,14 +453,14 @@ form {
     }
 
     .email-input, .send-button {
-        font-size: 1em; /* Reducimos el tamaño de la fuente */
-        padding: 12px 15px; /* Reducimos el padding */
+        height: 50px; /* Mantenemos la misma altura */
+        box-sizing: border-box;
     }
 
     .send-button {
-        width: 30%; /* Reducido de 40% a 30% */
-        padding: 8px 12px; /* Reducido un poco más el padding */
-        font-size: 0.9em; /* Reducimos un poco el tamaño de la fuente */
+        width: 30%;
+        padding: 0 15px; /* Ajustamos el padding horizontal */
+        font-size: 1em; /* Igualamos el tamaño de fuente con el input */
     }
 
     .email-input {
