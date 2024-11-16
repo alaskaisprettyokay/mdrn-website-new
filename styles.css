@@ -40,7 +40,8 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 0; /* Eliminar el margen superior */
+    width: 90%;
+    margin: 0 auto;
 }
 
 .email-input {
@@ -366,6 +367,7 @@ form {
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 7em;
+        margin: 10px 10px 20px 10px; /* Reducimos márgenes */
     }
 
     .coming-soon {
@@ -389,22 +391,71 @@ form {
     .social-icons a {
         font-size: 1.5em;
     }
+
+    form {
+        flex-direction: column;
+        width: 85%;
+        margin: 0 auto;
+        align-items: center; /* Centramos los elementos del form */
+    }
+
+    .email-input {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    .send-button {
+        width: 40%; /* Reducido de 50% a 40% */
+        box-sizing: border-box;
+    }
 }
 
 @media screen and (max-width: 480px) {
+    .container {
+        width: 90%;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+
     h1 {
         font-size: 5em;
     }
 
-    .coming-soon {
-        font-size: 1.2em;
+    .logo img {
+        max-width: 300px; /* Reducimos el tamaño del logo */
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .container {
+        width: 95%;
+        padding: 0 5px;
     }
 
-    .email-input, .send-button {
+    .logo img {
+        max-width: 250px; /* Aún más pequeño para pantallas muy pequeñas */
+    }
+
+    form {
         width: 90%;
     }
 
-    .social-icons a {
-        font-size: 1.2em;
+    .email-input, .send-button {
+        font-size: 1em; /* Reducimos el tamaño de la fuente */
+        padding: 12px 15px; /* Reducimos el padding */
+    }
+
+    .send-button {
+        width: 30%; /* Reducido de 40% a 30% */
+        padding: 8px 12px; /* Reducido un poco más el padding */
+        font-size: 0.9em; /* Reducimos un poco el tamaño de la fuente */
+    }
+
+    .email-input {
+        width: 100%; /* El input sí ocupa todo el ancho */
+        margin-bottom: 10px;
+        padding: 12px 15px;
     }
 }
