@@ -75,6 +75,7 @@ form {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .send-button::before {
