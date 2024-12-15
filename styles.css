@@ -496,22 +496,16 @@ form {
 }
 
 .footer {
-    padding: 20px;
     text-align: center;
     color: #EDF8FD;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
-    line-height: 1;
-    border-radius: 5px;
 }
 
 .footer-container {
-    padding: 2px;
     text-align: center;
     color: #EDF8FD;
     font-size: .8rem;
-    border-radius: 5px;
-}
 
 .header-content {
     position: relative;
