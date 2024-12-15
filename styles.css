@@ -16,8 +16,13 @@ body {
 
 .container {
     text-align: center;
-    z-index: 2;
+    z-index: 3;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 h1 {
@@ -37,6 +42,8 @@ h1 {
     margin-bottom: 20px;
     opacity: 0.8;
     align-items: center;
+    font-weight: 1;
+    font-style: italic;
 }
 
 form {
@@ -495,6 +502,7 @@ form {
 .subtitle2 {
     margin-top: 0;
     padding-top: 0;
+    margin-bottom: 20px;
 }
 
 .footer {
