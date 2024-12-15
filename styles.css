@@ -21,7 +21,7 @@ body {
 
 h1 {
     font-size: 9em;
-    color: #111419;
+    color: #A4AAB2;
     text-shadow: -5px -5px 15px #d0ebfb9b, 5px 5px 15px #2d354221;
     transition: text-shadow 0.3s ease;
     margin: 10px 20px 30px 20px;
@@ -31,10 +31,11 @@ h1 {
 
 .coming-soon {
     font-size: 1.5em;
-    color: #111419;
+    color: #A4AAB2;
     margin-top: 0;
     margin-bottom: 20px;
     opacity: 0.8;
+    align-items: center;
 }
 
 form {
@@ -469,7 +470,7 @@ form {
 .subtitle, .subtitle1, .subtitle2 {
     font-family: 'Inter', sans-serif;
     font-size: 1.5rem;
-    color: #000000;
+    color: #323842;
     text-align: center;
     background-color: rgba(255, 255, 255, 0);
     border-radius: 5px;
@@ -506,6 +507,11 @@ form {
     text-align: center;
     color: #EDF8FD;
     font-size: .8rem;
+
+header {
+    background-color: #03091c;
+    border-radius: 5px;
+}
 
 .header-content {
     position: relative;
