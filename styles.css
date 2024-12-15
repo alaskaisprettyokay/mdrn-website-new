@@ -11,6 +11,7 @@ body {
     background-color: #13161b;
     font-family: 'Montserrat', sans-serif;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .container {
