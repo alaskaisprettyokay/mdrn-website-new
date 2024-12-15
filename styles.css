@@ -3,29 +3,30 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    overflow: hidden;
-    background-color: #13161b; /* Fondo gris claro */
-    font-family: 'Montserrat', sans-serif; /* Fuente Montserrat */
+    background-color: #13161b;
+    font-family: 'Montserrat', sans-serif;
+    overflow-y: auto;
 }
 
 .container {
     text-align: center;
-    z-index: 2; /* Asegura que el contenedor esté por encima del símbolo alquímico */
+    z-index: 2;
     position: relative;
 }
 
 h1 {
-    font-size: 9em; /* Tamaño de fuente más grande */
-    color: #111419; /* Color del texto igual al fondo */
-    text-shadow: -5px -5px 15px  #d0ebfb9b, 5px 5px 15px #2d354221;
-    transition: text-shadow 0.3s ease; /* Transición suave */
+    font-size: 9em;
+    color: #111419;
+    text-shadow: -5px -5px 15px #d0ebfb9b, 5px 5px 15px #2d354221;
+    transition: text-shadow 0.3s ease;
     margin: 10px 20px 30px 20px;
-    font-weight: 700; /* Añadido para usar la versión bold de Montserrat */
-    line-height: 0.9; /* Añadimos esta línea para reducir el interlineado */
+    font-weight: 700;
+    line-height: 0.9;
 }
 
 .coming-soon {
@@ -45,14 +46,13 @@ form {
 }
 
 .email-input {
-    padding: 15px 20px; /* Más padding */
-    font-size: 1.2em; /* Tamaño de fuente más grande */
-    border-radius: 25px; /* Esquinas redondeadas */
+    padding: 15px 20px;
+    font-size: 1.2em;
+    border-radius: 25px;
     border: none;
-    background-color: #e0e0e0; /* Fondo un poco más gris que el fondo */
-    /*box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6); /* Sombra con menor opacidad */
+    background-color: #e0e0e0;
     outline: none;
-    margin-right: 10px; /* Espacio entre el campo de texto y el botón */
+    margin-right: 10px;
 }
 
 .send-button {
@@ -62,7 +62,6 @@ form {
     border: none;
     background-color: #111419;
     color: #f0f0f0;
-    /*box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.6), 5px 5px 15px rgba(163, 177, 198, 0.6);*/
     cursor: pointer;
     transition: all 0.3s ease;
     position: relative;
@@ -76,28 +75,25 @@ form {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, #FFB3BA, #BFABFF); /* Degradado pastel naranja a lila */
+    background: linear-gradient(45deg, #FFB3BA, #BFABFF);
     opacity: 0;
     transition: opacity 0.3s ease;
     border-radius: 25px;
 }
 
 .send-button:hover::before {
-    opacity: 0.3; /* Reducimos la opacidad para que el texto sea más visible */
+    opacity: 0.3;
 }
 
 .send-button:hover {
-    color: #f0f0f0; /* Mantenemos el color del texto blanco */
-    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5); /* Añadimos una sombra sutil para mejorar la legibilidad */
+    color: #f0f0f0;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 15px rgba(255, 255, 255, 0.6), -5px -5px 15px rgba(163, 177, 198, 0.6);
 }
 
 .send-button span {
     position: relative;
     z-index: 1;
-}
-
-.send-button:hover {
-    box-shadow: 5px 5px 15px rgba(255, 255, 255, 0.6), -5px -5px 15px rgba(163, 177, 198, 0.6); /* Sombra invertida en hover */
 }
 
 .background {
@@ -114,82 +110,74 @@ form {
     position: absolute;
     border-radius: 50%;
     opacity: 0.5;
-    transition: opacity 2s ease-in-out; /* Transición más larga y suave */
+    transition: opacity 2s ease-in-out, width 0.5s ease, height 0.5s ease;
     filter: blur(30px);
-    mix-blend-mode: screen; /* Mezcla aditiva */
+    mix-blend-mode: screen;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: width 0.5s ease, height 0.5s ease; /* Transición suave para el tamaño */
     animation: fadeIn 2s ease-in-out forwards;
 }
 
 .circle1 {
-    width: 35vmin; /* Tamaño aumentado */
-    height: 35vmin; /* Tamaño aumentado */
-    background: radial-gradient(circle, #FF00FF, #00FFFF); /* Degradado radial */
+    width: 35vmin;
+    height: 35vmin;
+    background: radial-gradient(circle, #FF00FF, #00FFFF);
     animation: orbit1 15s infinite linear;
 }
 
 .circle2 {
-    width: 40vmin; /* Tamaño ajustado */
-    height: 40vmin; /* Tamaño ajustado */
-    background: radial-gradient(circle, #FF4500, #1E90FF); /* Nueva combinación de colores */
+    width: 40vmin;
+    height: 40vmin;
+    background: radial-gradient(circle, #FF4500, #1E90FF);
     animation: orbit2 20s infinite ease-in-out alternate;
 }
 
 .circle3 {
-    width: 40vmin; /* Tamaño aumentado */
-    height: 40vmin; /* Tamaño aumentado */
-    background: radial-gradient(circle, #FFFF00, #00c3ff); /* Degradado radial */
+    width: 40vmin;
+    height: 40vmin;
+    background: radial-gradient(circle, #FFFF00, #00c3ff);
     animation: orbit3 18s infinite ease-in-out;
 }
 
 .circle4 {
-    width: 30vmin; /* Tamaño aumentado */
-    height: 30vmin; /* Tamaño aumentado */
-    background: radial-gradient(circle, #FFD700, #8A2BE2); /* Degradado radial */
+    width: 30vmin;
+    height: 30vmin;
+    background: radial-gradient(circle, #FFD700, #8A2BE2);
     animation: orbit4 22s infinite ease-in-out alternate-reverse;
 }
 
-
-/* Trayectorias menos dispersas */
 @keyframes orbit1 {
-    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
     25% { transform: translate(-50%, -50%) translate(10vmin, 5vmin); }
     50% { transform: translate(-50%, -50%) translate(0, 10vmin); }
     75% { transform: translate(-50%, -50%) translate(-10vmin, 5vmin); }
-    100% { transform: translate(-50%, -50%) translate(0, 0); }
 }
 
 @keyframes orbit2 {
-    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
     25% { transform: translate(-50%, -50%) translate(15vmin, -10vmin); }
     50% { transform: translate(-50%, -50%) translate(0, -20vmin); }
     75% { transform: translate(-50%, -50%) translate(-15vmin, -10vmin); }
-    100% { transform: translate(-50%, -50%) translate(0, 0); }
 }
 
 @keyframes orbit3 {
-    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
     25% { transform: translate(-50%, -50%) translate(8vmin, 12vmin); }
     50% { transform: translate(-50%, -50%) translate(0, 16vmin); }
     75% { transform: translate(-50%, -50%) translate(-8vmin, 12vmin); }
-    100% { transform: translate(-50%, -50%) translate(0, 0); }
 }
 
 @keyframes orbit4 {
-    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    0%, 100% { transform: translate(-50%, -50%) translate(0, 0); }
     25% { transform: translate(-50%, -50%) translate(12vmin, -8vmin); }
     50% { transform: translate(-50%, -50%) translate(0, -16vmin); }
     75% { transform: translate(-50%, -50%) translate(-12vmin, -8vmin); }
-    100% { transform: translate(-50%, -50%) translate(0, 0); }
 }
 
-/* Estilos para los botones del reproductor de audio */
 .audio-player {
     position: relative;
-    z-index: 3; /* Asegura que los botones estén por encima de todo */
+    z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -198,15 +186,12 @@ form {
 
 .buttons {
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
     padding: 1em 0;
-   /* opacity: .8; */
 }
 
 .neu {
-    /*box-shadow: -5px -5px 15px 0px #ffffff9e, 5px 5px 15px 0px #97a4b8a8;*/
-    background: #d0d0d0 ;
+    background: #d0d0d0;
     border-radius: 2em;
     border: 0;
 }
@@ -214,10 +199,8 @@ form {
 .btn {
     width: 50px;
     height: 50px;
-    border-radius: 50%; /* Esto hace que el botón sea perfectamente redondo */
-    padding: 0; /* Eliminamos el padding para asegurar que sea redondo */
+    border-radius: 50%;
     margin: 5px;
-    border-radius: 30px;
     color: #7e8a98;
     outline: none;
     cursor: pointer;
@@ -225,7 +208,6 @@ form {
     align-items: center;
     justify-content: center;
     font-size: 1.5em;
-    text-decoration: none;
     transition: all 0.3s ease;
 }
 
@@ -235,13 +217,11 @@ form {
 
 .btn:hover {
     color: #5a6674;
-    /*box-shadow: -2px -2px 5px #ffffff, 2px 2px 5px #babecc;*/
 }
 
 .btn:active {
     cursor: pointer;
-    /*box-shadow: inset -5px -5px 15px 0px #ffffff9e, inset 5px 5px 15px 0px #a3b1c6a8*/
-    }
+}
 
 .alchemical-symbol-container {
     position: absolute;
@@ -273,38 +253,21 @@ form {
 }
 
 @keyframes rotate-clockwise {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 @keyframes rotate-counterclockwise {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(-360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
 }
 
-/* Eliminada la animación @keyframes pulse */
-
-/* Estilos específicos para los botones de audio si es necesario */
-
-
-/* Estilos para los botones de redes sociales */
 .social-buttons {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
-    /*opacity: .8; */
 }
-
-/* ... resto de los estilos ... */
 
 .email-input, .send-button {
     transition: all 0.5s ease;
@@ -353,7 +316,6 @@ form {
 .twitter-x-icon:before {
     font-family: 'TwitterXIcon';
     content: '\e800';
-    /* Ajusta este valor al código correcto del icono */
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -363,11 +325,10 @@ form {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Media Queries para responsividad */
 @media screen and (max-width: 768px) {
     h1 {
         font-size: 7em;
-        margin: 10px 10px 20px 10px; /* Reducimos márgenes */
+        margin: 10px 10px 20px 10px;
     }
 
     .coming-soon {
@@ -380,10 +341,10 @@ form {
     }
 
     .email-input, .send-button {
-        height: 50px; /* Aseguramos que ambos elementos tengan la misma altura */
+        height: 50px;
         box-sizing: border-box;
-        padding: 0 20px; /* Ajustamos el padding vertical */
-        line-height: 50px; /* Centramos el texto verticalmente */
+        padding: 0 20px;
+        line-height: 50px;
     }
 
     .send-button {
@@ -406,7 +367,7 @@ form {
         flex-direction: column;
         width: 85%;
         margin: 0 auto;
-        align-items: center; /* Centramos los elementos del form */
+        align-items: center;
     }
 
     .email-input {
@@ -417,7 +378,7 @@ form {
     }
 
     .send-button {
-        width: 40%; /* Reducido de 50% a 40% */
+        width: 40%;
         box-sizing: border-box;
     }
 }
@@ -434,7 +395,7 @@ form {
     }
 
     .logo img {
-        max-width: 300px; /* Reducimos el tamaño del logo */
+        max-width: 300px;
     }
 }
 
@@ -445,7 +406,7 @@ form {
     }
 
     .logo img {
-        max-width: 250px; /* Aún más pequeño para pantallas muy pequeñas */
+        max-width: 250px;
     }
 
     form {
@@ -453,19 +414,111 @@ form {
     }
 
     .email-input, .send-button {
-        height: 50px; /* Mantenemos la misma altura */
+        height: 50px;
         box-sizing: border-box;
     }
 
     .send-button {
         width: 30%;
-        padding: 0 15px; /* Ajustamos el padding horizontal */
-        font-size: 1em; /* Igualamos el tamaño de fuente con el input */
+        padding: 0 15px;
+        font-size: 1em;
     }
 
     .email-input {
-        width: 100%; /* El input sí ocupa todo el ancho */
+        width: 100%;
         margin-bottom: 10px;
         padding: 12px 15px;
     }
+}
+
+.mdrn-main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.page-container {
+    transition: background-color 0.6s ease-out;
+}
+
+.text-blurb-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 100px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.text-blurb-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.subtitle, .subtitle1, .subtitle2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    color: #000000;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 5px;
+    padding: 10px;
+    display: inline-block;
+    margin: 10px 0;
+}
+
+.subtitle1, .subtitle2 {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.subtitle1 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.subtitle2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+    color: #EDF8FD;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1;
+    border-radius: 5px;
+}
+
+.footer-container {
+    background-color: #03091c;
+    padding: 2px;
+    text-align: center;
+    color: #EDF8FD;
+    font-size: .8rem;
+    border-radius: 5px;
+}
+
+.header-content {
+    position: relative;
+    z-index: 10;
+    padding: 10px;
+    text-align: center;
+    color: #EDF8FD;
+    font-size: .8rem;
+    border-radius: 5px;
 }

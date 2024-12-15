@@ -13,61 +13,81 @@
 </head>
 
 <body>
-    <div class="container">
-        <div class="social-buttons">
-            <a href="https://x.com/mdrnprotocol" target="_blank" class="btn lg neu">
-                <i class="twitter-x-icon"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/christopher-rose-mdrn" target="_blank" class="btn lg neu">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="mailto:chris@mdrn.ai" target="_blank" class="btn lg neu">
-                <i class="fas fa-envelope"></i>
-            </a>
+    <div class="page-container">
+        <header>
+            <div class="header-content">
+                <p class="coming-soon">Coming Soon</p>
+            </div>
+        </header>
+        <div class="mdrn-main">
+            <div class="main-content">
+                <div class="container">
+                    <h1 class="logo"><img src="./images/mdrn_logo.png" alt="MDRN Logo"></h1>
+                    <br>
+                    <!-- New text under the logo -->
+                    <p class="subtitle">Massively Distributed Radio Network</p>
+                    <br>
+                    <p class="subtitle1">Decentralized internet radio</p>
+                    <br>
+                    <p class="subtitle2">Web3 music curation / creation platform</p>
+                    <br>
+                    <br>
+                    <br>
+
+                    <form action="https://mdrn.us11.list-manage.com/subscribe/post?u=68c915cbb592d293d6023eb24&amp;id=0f8a121b6b&amp;f_id=007c05e1f0" method="post" id="email-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+                        <input type="email" name="EMAIL" placeholder="Join the waitlist" class="email-input" id="email-input" required>
+                        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                            <input type="text" name="b_68c915cbb592d293d6023eb24_0f8a121b6b" tabindex="-1" value="">
+                        </div>
+                        <button type="submit" name="subscribe" class="send-button" id="send-button">Send</button>
+                    </form>
+                    <div id="confirmation-text" class="confirmation-text hidden">Talk to you soon...</div>
+                    <br>
+                    <div class="social-buttons">
+                        <a href="https://x.com/mdrnprotocol" target="_blank" class="btn lg neu">
+                            <i class="twitter-x-icon"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/christopher-rose-mdrn" target="_blank" class="btn lg neu">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:chris@mdrn.ai" target="_blank" class="btn lg neu">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                    <!-- Contenedor del reproductor de audio -->
+                    <div class="audio-player">
+                        <audio id="audio" src="audio/f2-ride-party.mp3" autoplay></audio>
+                        <div class="buttons">
+                            <button id="play-pause" class="btn lg neu"><i class="fas fa-play"></i></button>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <p class="footer-text">MDRN is a decentralized internet radio network that allows users to create and share music with a global audience. It is a platform for music curation and creation, where users can upload their own music or discover new artists and genres. MDRN is built on the principles of decentralization, transparency, and community ownership, ensuring that the platform is free from centralized control and censorship.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="background">
+                <div class="circle circle1"></div>
+                <div class="circle circle2"></div>
+                <div class="circle circle3"></div>
+                <div class="circle circle4"></div>
+            </div>
         </div>
-        <p class="coming-soon">Coming Soon</p>
-        <h1 class="logo"><img src="./images/mdrn_logo_black.png" alt="MDRN Logo"></h1>
-        <form action="https://mdrn.us11.list-manage.com/subscribe/post?u=68c915cbb592d293d6023eb24&amp;id=0f8a121b6b&amp;f_id=007c05e1f0" method="post" id="email-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-            <input type="email" name="EMAIL" placeholder="Sign up for updates..." class="email-input" id="email-input" required>
-            <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                <input type="text" name="b_68c915cbb592d293d6023eb24_0f8a121b6b" tabindex="-1" value="">
-            </div>
-            <button type="submit" name="subscribe" class="send-button" id="send-button">Send</button>
-        </form>
-        <div id="confirmation-text" class="confirmation-text hidden">Talk to you soon...</div>
-        <!-- Contenedor del reproductor de audio -->
-        <div class="audio-player">
-            <audio id="audio" src="audio/f2-ride-party.mp3"></audio>
-            <div class="buttons">
-                <button id="play-pause" class="btn lg neu"><i class="fas fa-play"></i></button>
-                <button id="stop" class="btn lg neu"><i class="fas fa-stop"></i></button>
-            </div>
+        <!-- New container for the text blurb -->
+        <div class="text-blurb-container hidden">
+            <p class="text-blurb">This is a new text blurb that appears as you scroll down. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+
+        <!-- New footer container -->
+        <div class="footer-container">
+            <footer>
+                <!-- Footer content goes here -->
+                <p>© 2023 MDRN Music. All rights reserved.</p>
+            </footer>
         </div>
     </div>
-    <div class="background">
-        <div class="circle circle1"></div>
-        <div class="circle circle2"></div>
-        <div class="circle circle3"></div>
-        <div class="circle circle4"></div>
-    </div>
-    <!--<div class="alchemical-symbol-container"> --
-        <svg class="alchemical-symbol outer" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <-- Círculo exterior -->
-            <!--<circle cx="50" cy="50" r="45" fill="none" stroke="#ffffff" stroke-width="1"/>
-            
-            <-- Hexagrama (estrella de seis puntas) -->
-           <!-- <polygon points="50,5 72.5,27.5 95,50 72.5,72.5 50,95 27.5,72.5 5,50 27.5,27.5" fill="none" stroke="#ffffff" stroke-width="1"/>
-        </svg>
-        
-        <svg class="alchemical-symbol inner" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <-- Círculo interior 
-            <circle cx="50" cy="50" r="25" fill="none" stroke="#ffffff" stroke-width="1"/>
-            
-            <-- Triángulos equiláteros 
-            <polygon points="50,25 70.7,62.5 29.3,62.5" fill="none" stroke="#ffffff" stroke-width="1"/>
-            <polygon points="50,75 70.7,37.5 29.3,37.5" fill="none" stroke="#ffffff" stroke-width="1"/>
-        </svg>
-    </div> -->
+
     <script src="script.js"></script>
 </body>
 

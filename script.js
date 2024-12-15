@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const playPauseButton = document.getElementById('play-pause');
     const stopButton = document.getElementById('stop');
     const circles = document.querySelectorAll('.circle');
+    const sections = document.querySelectorAll('.content-section');
+    const background = document.querySelector('.background');
+    const mainContent = document.querySelector('.main-content');
+    const pageContainer = document.querySelector('.page-container');
+    const textBlurbContainer = document.querySelector('.text-blurb-container');
 
     let audioContext, analyser, dataArray, source;
 
@@ -55,9 +60,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             audio.play();
             playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+            playPauseButton.classList.add('playing');
         } else {
             audio.pause();
             playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+            playPauseButton.classList.remove('playing');
         }
     });
 
@@ -110,5 +117,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Submit the form
         form.submit();
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
+
+    // Parallax effect for the background
+    window.addEventListener('scroll', function() {
+        const scrollPosition = window.scrollY;
+        background.style.transform = `translateY(${scrollPosition * 0.5}px)`;
+
+        // Hide main content when scrolling down to new sections
+        if (scrollPosition > window.innerHeight / 2) {
+            mainContent.classList.add('hidden');
+        } else {
+            mainContent.classList.remove('hidden');
+        }
+
+        // Change background color and reveal text blurb
+        if (scrollPosition > window.innerHeight) {
+            pageContainer.style.backgroundColor = 'white';
+            textBlurbContainer.classList.remove('hidden');
+            textBlurbContainer.classList.add('visible');
+        } else {
+            pageContainer.style.backgroundColor = '';
+            textBlurbContainer.classList.add('hidden');
+            textBlurbContainer.classList.remove('visible');
+        }
     });
 });
