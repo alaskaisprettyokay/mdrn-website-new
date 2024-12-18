@@ -12,6 +12,43 @@ body {
     font-family: 'Montserrat', sans-serif;
     overflow-y: auto;
     overflow-x: hidden;
+    transition: background-color 0.5s ease;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #03091c, 0.9;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    color: #EDF8FD;
+    font-size: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    position: relative;
+    z-index: 10;
+    padding: 10px;
+    text-align: center;
+    color: #EDF8FD;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.top-bar a {
+    color: #EDF8FD;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.top-bar a:hover {
+    color: #A4AAB2;
 }
 
 .container {
@@ -25,33 +62,214 @@ body {
     min-height: 100vh;
 }
 
+.container2 {
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px);
+    max-width: none;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}
+
+.contact-us {
+    background-color: rgba(19, 22, 27, 0.7); /* Match the background color with opacity */
+    border-radius: 10px; /* Consistent border radius */
+    padding: 20px; /* Consistent padding */
+    margin: 20px auto; /* Centered with margin */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Consistent shadow */
+    width: calc(100% - 40px); /* Consistent width */
+    max-width: none; /* No max-width to match other sections */
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+    position: relative; /* Positioning */
+    z-index: 1; /* Layering */
+    text-align: center; /* Centered text */
+    color: #A4AAB2; /* Text color */
+    font-size: 1.5em; /* Font size */
+    font-weight: 400; /* Font weight */
+    font-style: italic; /* Font style */
+    opacity: 0.8; /* Text opacity */
+}
+
+.contact-us input[type="text"],
+.contact-us input[type="email"],
+.contact-us textarea {
+    width: calc(100% - 40px); /* Adjust width to fit within the container */
+    padding: 15px 20px;
+    font-size: .8em;
+    border-radius: 10px;
+    border: none;
+    background-color: #e0e0e0;
+    outline: none;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.contact-us textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px; /* Set a minimum height */
+}
+
+.contact-us button[type="submit"] {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    border-radius: 25px;
+    border: none;
+    background-color: #111419;
+    color: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.contact-us button[type="submit"]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #FFB3BA, #BFABFF);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 25px;
+}
+
+.contact-us button[type="submit"]:hover::before {
+    opacity: 0.3;
+}
+
+.contact-us button[type="submit"]:hover {
+    color: #f0f0f0;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 15px rgba(255, 255, 255, 0.6), -5px -5px 15px rgba(163, 177, 198, 0.6);
+}
+
 h1 {
     font-size: 9em;
-    color: #A4AAB2;
+    color: #000000;
     text-shadow: -5px -5px 15px #d0ebfb9b, 5px 5px 15px #2d354221;
     transition: text-shadow 0.3s ease;
-    margin: 10px 20px 30px 20px;
     font-weight: 700;
     line-height: 0.9;
+    text-align: center;
+    background-color: #D0EBFB, 0.7;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 2em;
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    text-align: center;
+    font-weight: 1;
+    font-style: italic;
+    background-color: #D0EBFB;
+    border-radius: 10px;
+}
+
+h3 {
+    font-size: 1.5em;
+    color: #A4AAB2;
+    opacity: 0.8;
+    text-align: center;
+    font-weight: 1;
+    font-style: italic;
+}
+
+p {
+    font-size: 1.5em;
+    color: #A4AAB2;
+    margin-top: 0;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    font-weight: 1;
+    font-style: italic;
+    text-align: center;
+    background-color: #13161b, 0.7;
+}
+
+p2 {
+    font-size: 1.5em;
+    color: #A4AAB2;
+    margin-top: 0;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    font-weight: 1;
+    font-style: italic;
+    text-align: center;
+}
+
+p3 {
+    font-size: 1.5em;
+    color: #A4AAB2;
+    margin-top: 0;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    font-weight: 1;
+    font-style: italic;
+    text-align: right;
+}
+
+.about-us {
+    background-color: #13161b, 0.7;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px);
+    max-width: none;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+} 
+
+.about-us-img {
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    margin-bottom: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.feature-img {
+    width: 50%;
+    height: auto;
+    max-width: 400px;
+    border-radius: 10px;
+    margin-bottom: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+
 }
 
 .coming-soon {
     font-size: 1.5em;
     color: #A4AAB2;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     opacity: 0.8;
     align-items: center;
     font-weight: 1;
     font-style: italic;
 }
-
-form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    margin: 0 auto;
+button {
+    text-align: center;
 }
 
 .email-input {
@@ -115,6 +333,7 @@ form {
     width: 80vmin;
     height: 80vmin;
     z-index: 0;
+    opacity: .8;
 }
 
 .circle {
@@ -478,10 +697,9 @@ form {
 .subtitle, .subtitle1, .subtitle2 {
     font-family: 'Inter', sans-serif;
     font-size: 1.5rem;
-    color: #323842;
+    color: #F7F7F7;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0);
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 10px;
     display: inline-block;
     margin: 10px 0;
@@ -517,17 +735,18 @@ form {
     color: #EDF8FD;
     font-size: .8rem;
 
-header {
-    background-color: #03091c;
+.cta-button {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 15px 30px;
+    color: #fff;
+    border: none;
     border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
 }
 
-.header-content {
-    position: relative;
-    z-index: 10;
-    padding: 10px;
+button {
     text-align: center;
-    color: #EDF8FD;
-    font-size: .8rem;
-    border-radius: 5px;
 }
