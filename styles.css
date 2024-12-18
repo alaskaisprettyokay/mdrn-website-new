@@ -12,6 +12,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     overflow-y: auto;
     overflow-x: hidden;
+    transition: background-color 0.5s ease;
 }
 
 .container {
@@ -25,21 +26,127 @@ body {
     min-height: 100vh;
 }
 
+.container2 {
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px);
+    max-width: none;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+}
+
 h1 {
     font-size: 9em;
-    color: #A4AAB2;
+    color: #000000;
     text-shadow: -5px -5px 15px #d0ebfb9b, 5px 5px 15px #2d354221;
     transition: text-shadow 0.3s ease;
-    margin: 10px 20px 30px 20px;
     font-weight: 700;
     line-height: 0.9;
+    text-align: center;
+    background-color: #D0EBFB, 0.7;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    padding: 20px;
+}
+
+h2 {
+    font-size: 2em;
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    text-align: center;
+    font-weight: 1;
+    font-style: italic;
+    background-color: #D0EBFB;
+    border-radius: 10px;
+}
+
+h3 {
+    font-size: 1.5em;
+    color: #A4AAB2;
+    opacity: 0.8;
+    text-align: center;
+    font-weight: 1;
+    font-style: italic;
+}
+
+p {
+    font-size: 1.5em;
+    color: #A4AAB2;
+    margin-top: 0;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    font-weight: 1;
+    font-style: italic;
+    text-align: center;
+    background-color: #13161b, 0.7;
+}
+
+p2 {
+    font-size: 1.5em;
+    color: #A4AAB2;
+    margin-top: 0;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    font-weight: 1;
+    font-style: italic;
+    text-align: center;
+}
+
+p3 {
+    font-size: 1.5em;
+    color: #A4AAB2;
+    margin-top: 0;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    font-weight: 1;
+    font-style: italic;
+    text-align: right;
+}
+
+.about-us {
+    background-color: #13161b, 0.7;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 40px);
+    max-width: none;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+} 
+
+.about-us-img {
+    width: 400px;
+    height: 400px;
+    border-radius: 10px;
+    margin-bottom: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.feature-img {
+    border-radius: 10px;
+    margin-bottom: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .coming-soon {
     font-size: 1.5em;
     color: #A4AAB2;
     margin-top: 0;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     opacity: 0.8;
     align-items: center;
     font-weight: 1;
@@ -52,6 +159,11 @@ form {
     align-items: center;
     width: 90%;
     margin: 0 auto;
+    text-align: center;
+}
+
+button {
+    text-align: center;
 }
 
 .email-input {
@@ -115,6 +227,7 @@ form {
     width: 80vmin;
     height: 80vmin;
     z-index: 0;
+    opacity: .8;
 }
 
 .circle {
@@ -530,4 +643,20 @@ header {
     color: #EDF8FD;
     font-size: .8rem;
     border-radius: 5px;
+}
+
+.cta-button {
+    display: inline-block;
+    margin: 0 auto;
+    padding: 15px 30px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+button {
+    text-align: center;
 }

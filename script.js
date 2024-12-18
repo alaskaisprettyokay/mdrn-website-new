@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const background = document.querySelector('.background');
     const mainContent = document.querySelector('.main-content');
     const pageContainer = document.querySelector('.page-container');
-    const textBlurbContainer = document.querySelector('.text-blurb-container');
+    const container2 = document.querySelector('.container2');
 
     let audioContext, analyser, dataArray, source;
 
@@ -121,17 +121,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            console.log('Entry:', entry); // Log entry details
             if (entry.isIntersecting) {
+                console.log('Container2 is visible'); // Log when container2 becomes visible
                 entry.target.classList.add('visible');
+                observer.unobserve(entry.target); // Stop observing once it's visible
             }
         });
     }, {
-        threshold: 0.1
+        threshold: 0.1 // Adjust this value as needed
     });
 
     sections.forEach(section => {
         observer.observe(section);
     });
+
+    observer.observe(container2);
 
     // Parallax effect for the background
     window.addEventListener('scroll', function() {
@@ -157,3 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+AOS.init({
+    easing: 'ease-in-quad',
+  });
