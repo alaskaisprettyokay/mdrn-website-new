@@ -164,5 +164,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 AOS.init({
-    easing: 'ease-in-quad',
+    once: true
   });
