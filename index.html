@@ -14,6 +14,15 @@
 </head>
 
 <body>
+    <div class="header">
+        <div class="header-content">
+            <div class="top-bar">
+                <a href="#about-us">About Us</a>
+                <a href="#contact-us">Contact</a>
+                <!-- <a href="#other-section">More</a> -->
+            </div>
+        </div>
+    </div>
     <div class="page-container">
         <div class="mdrn-main">
             <div class="main-content">
@@ -21,7 +30,7 @@
                     <img src="./images/mdrn_logo.png" alt="MDRN Logo">
                     <br>
                     <!-- New text under the logo -->
-                    <p class="subtitle">Massively Distributed Radio Network</p>
+                    <p class="subtitle"><u>Massively Distributed Radio Network</u><p>
                     <br>
                     <p class="subtitle1">Decentralized internet radio</p>
                     <p class="subtitle2">Web3 music curation platform</p>
@@ -76,10 +85,10 @@
     <div class="mdrn-main">
         <div class="main-content">
             <div class="container2" data-aos="fade-in">
-                <div class="content1" data-aos="fade-down">
+                <div class="content1" data-aos="fade-down" id="about-us">
                     <h1>MDRN MUSIC</h1>
                     <div class="about-us" data-aos="zoom-in" data-aos-delay="100" data-aos-anchor-placement="bottom-bottom">
-                        <p>Decentralized internet radio with transparent royalty payouts
+                        <p>Decentralized streaming with transparent royalty payouts
                             <br>
                             <br>
                             <button class="cta-button" onclick="window.location.href='waitlist.html'">Join Now</button></p>
@@ -89,11 +98,11 @@
                 </div>
                 <div class="about-us">
                     <h2>Community tools</h2>
-                    <p2>Connect to the fans and artist directly </p2>
+                    <p2>Connect directly with your favorite artists or your audience </p2>
                     <br>
                     <p2>Create your own radio station</p2>
                     <br>
-                    <p2>Live chat with the artists and djs</p2>
+                    <p2>Live chat with artists, djs, and curators</p2>
                     <br>
                     <br>
                     <img src="./images/chat.png" alt="Decentralized Streaming" class="feature-img"  data-aos="zoom-in" data-aos-delay="300" data-aos-anchor-placement="bottom-bottom">
@@ -104,16 +113,13 @@
                         <h3><u>Decentralized Radio Stations</u></h3>
                         <img src="./images/demo-wireframe.png" alt="Decentralized Streaming" class="feature-img"  data-aos="zoom-in" data-aos-delay="300" data-aos-anchor-placement="bottom-bottom">
                         <br>
-                        <p>directly connect fans and curators and artists</p>
-                        <p>no gatekeeping</p>
-                        <p>donate directly to artists and curators</p>
-                        <br>
-                        <h3><u>Fund creation of new music and share royalties</u></h3>
+                        <p></p>
+                        <h2><u>Fund creation of new music and share royalties</u></h3>
                         <br>
                         <img src="./images/proposals.png" alt="Proposal" class="feature-img" data-aos="zoom-in" data-aos-delay="1000" data-aos-anchor-placement="bottom-bottom">
                     </div>
                 </div>
-                <div class="contact-us">
+                <div class="contact-us" id="contact-us">
                     <h2>Contact Us</h2>
                     <form action="https://formsubmit.co/chris@mdrn.music" method="POST">
                         <input type="text" name="name" placeholder="Your Name" required>
