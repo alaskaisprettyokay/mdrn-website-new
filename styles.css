@@ -246,12 +246,16 @@ p3 {
 }
 
 .feature-img {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
     border-radius: 10px;
     margin-bottom: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+
 }
 
 .coming-soon {
