@@ -295,6 +295,7 @@ button {
     position: relative;
     overflow: hidden;
     margin-bottom: 10px;
+    align-items: center;
 }
 
 .send-button::before {
@@ -565,24 +566,6 @@ button {
         font-size: 1.5em;
     }
 
-    .email-form {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .email-input, .send-button {
-        height: 50px;
-        box-sizing: border-box;
-        line-height: 50px;
-    }
-
-    .send-button {
-        width: 40%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .social-icons {
         margin-top: 20px;
     }
@@ -608,6 +591,7 @@ button {
     .send-button {
         width: 40%;
         box-sizing: border-box;
+
     }
 }
 
@@ -650,6 +634,7 @@ button {
         width: 30%;
         padding: 0 15px;
         font-size: 1em;
+        background-color: #111419, 0.7;
     }
 
     .email-input {
@@ -749,4 +734,23 @@ button {
 
 button {
     text-align: center;
+}
+
+.validate {
+    text-align: center;
+}
+
+#email-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.email-input, .send-button {
+    width: 80%;
+    max-width: 400px;
+    margin-bottom: 10px;
 }
