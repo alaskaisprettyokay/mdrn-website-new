@@ -110,28 +110,28 @@ main {
     position: relative;
 }
 
-/* Fondo con gradiente para cada sección /
+/* Fondo con gradiente para cada sección */
 
-/
+
 .feature-section::before,
 .contact-section::before {
     content: '';
     position: absolute;
-    left: 10%;  
-    top: 30%;
+    left: 15%;  
+    top: 50%;
     transform: translateY(-60%);
     width: 40vmin;
     height: 40vmin;
     background: radial-gradient(circle, 
-        rgba(255, 20, 32, 0.4) 0%,  /
-        rgba(177, 150, 183, 0.4) 50%, 
+        rgba(8, 218, 255, 0.276) 0%,  
+        rgba(251, 3, 255, 0.201) 50%, 
         rgba(19, 22, 27, 0) 70%     
     );
     filter: blur(30px);
     z-index: 1;
     mix-blend-mode: screen;
     
-}*/
+}/*/
 
 /* Contenido por encima del gradiente */
 .feature-content,
@@ -294,10 +294,12 @@ p, li {
     color: #F7F7F7;
     text-align: left;
     font-weight: normal;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-   
+    line-height: 1.1;
+}
+.text-content ul,
+.text-content ol {
+    margin: 2em 0;          /* Espacio antes y después de las listas */
+    padding-left: 2em;     /* Sangría para la lista completa */
 }
 
 p2 {
@@ -342,12 +344,11 @@ p3 {
 }
 
 .text-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 90vh;
-    padding: 0 40;  /* Padding interno */
+    position: sticky;
+    top: 20vh;  /* Distancia desde la parte superior cuando se hace sticky */
+    height: fit-content;  /* Altura ajustada al contenido */
+    align-self: flex-start;  /* Para que el sticky funcione correctamente */
+    padding: 20px;
 }
 
 .image-content {
@@ -679,11 +680,10 @@ button {
     }
 
     .text-content {
-        order: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        position: relative;  /* Volver a posición normal en móvil */
+        top: auto;
+        align-self: center;
+        text-align: center;
     }
 
     .image-content {
@@ -818,3 +818,4 @@ button {
     z-index: 2;
 }
 
+}
