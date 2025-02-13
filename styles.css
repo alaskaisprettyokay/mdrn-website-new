@@ -11,14 +11,18 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: #13161b;
     color: #EDF8FD;
-    /*overflow-x: hidden; */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;  /* Prevenir scroll en body */
 }
 
 /* Layout principal */
 main {
     width: 100%;
     padding: 0 20% 0 20%;
-    display: block;
+    scroll-snap-type: y mandatory;  /* Eje vertical, snap obligatorio */
+    overflow-y: scroll;  /* Necesario para que funcione el snap */
+    height: 100vh;  /* Altura completa de la ventana */
 }
 
 @media screen and (max-width: 768px) {
@@ -97,14 +101,12 @@ main {
     color:  #111419;
 }
 
-
-.hero-section {
-    margin-top: 50px;
-    display: block;
-    position: relative;
+.hero-section,
+.feature-section,
+.contact-section {
+    scroll-snap-align: start;
+    min-height: 120vh;
     width: 100%;
-    overflow: visible;
-    z-index: 4;
 }
 
 .hero-container {
@@ -307,6 +309,7 @@ p3 {
     max-width: 1200px;
     margin: 0 auto;
     padding: 40px;  /* Padding interno */
+    opacity: 0;
 }
 
 .text-content {
@@ -316,6 +319,7 @@ p3 {
     justify-content: center;
     height: 90vh;
     padding: 0 40;  /* Padding interno */
+    opacity: 0;
 }
 
 .image-content {
@@ -329,6 +333,7 @@ p3 {
     width: auto;
     max-width: 400px;
     border-radius: 25px;
+    opacity: 0;
 }
 
 .feature-section.reverse .feature-content {
@@ -782,5 +787,52 @@ button {
 .content-wrapper {
     position: relative;
     z-index: 2;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.feature-content {
+    opacity: 0;
+}
+
+.text-content {
+    opacity: 0;
+}
+
+.feature-img {
+    opacity: 0;
+}
+
+/* Cuando se añade la clase visible */
+.feature-content.visible {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.text-content.visible {
+    animation: fadeIn 1s ease-out 0.3s forwards;
+}
+
+.feature-img.visible {
+    animation: zoomFadeIn 1.2s ease-out 0.5s forwards;
 }
 
