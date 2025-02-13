@@ -164,5 +164,25 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 AOS.init({
-    once: true
-  });
+    duration: 1000,
+    once: false,
+    mirror: true,
+    offset: 100,  // Reducir el offset para que se active más fácilmente
+    anchorPlacement: 'center-center'  // Cambiar el punto de activación
+});
+
+// Intersection Observer para las animaciones
+const animationObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, {
+    threshold: 0.1
+});
+
+// Observar las secciones y sus contenidos
+document.querySelectorAll('.feature-section, .feature-content, .text-content, .feature-img').forEach(element => {
+    animationObserver.observe(element);
+});

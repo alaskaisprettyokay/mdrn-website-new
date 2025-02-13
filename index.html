@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,131 +14,124 @@
 
 <body>
     <div class="header">
-        <div class="header-content">
-            <div class="top-bar">
-                <a href="#about-us">About Us</a>
-                <a href="#contact-us">Contact</a>
-                <!-- <a href="#other-section">More</a> -->
+        <nav class="nav-bar">
+            <a href="#about-us">About Us</a>
+            <a href="#contact-us">Contact</a>
+            <div class="audio-player">
+                <audio id="audio" src="audio/f2-ride-party.mp3"></audio>
+                <button id="play-pause" class="btn"><i class="fas fa-play"></i></button>
             </div>
+        </nav>
+    </div>
+
+    <div class="background">
+        <div class="circle circle1"></div>
+        <div class="circle circle2"></div>
+        <div class="circle circle3"></div>
+        <div class="circle circle4"></div>
+    </div>
+    
+    <main>
+        <section class="hero-section">
+            <div class="hero-container">
+                <h1>
+                    <img src="./images/MDRNwhite.svg" alt="MDRN Music - Massively Distributed Radio Network" class="logo">
+                </h1>
+                <h2 class="hero-title">Massively Distributed Radio Network</h2>
+                <h3>Decentralized internet radio</h3>
+                <h3>Web3 music curation platform</h3>
+                
+                <form action="https://mdrn.us11.list-manage.com/subscribe/post?u=68c915cbb592d293d6023eb24&amp;id=0f8a121b6b&amp;f_id=007c05e1f0" method="post" id="email-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
+                    <div class="email-container">
+                        <input type="email" name="EMAIL" placeholder="Join the waitlist" class="email-input" required>
+                        <button type="submit" class="send-button">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                <div id="confirmation-text" class="confirmation-text hidden">Talk to you soon...</div>
+            
+                <div class="social-buttons">
+                    <a href="https://x.com/mdrnprotocol" target="_blank" class="btn lg neu">
+                        <i class="twitter-x-icon"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/christopher-rose-mdrn" target="_blank" class="btn lg neu">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="mailto:chris@mdrn.music" target="_blank" class="btn lg neu">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="https://t.me/+Qa8B7XB1zs5mODhh" target="_blank" class="btn lg neu">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+
+            <section class="feature-section" id="about-us">
+                <div class="feature-content">
+                    <div class="text-content">
+                        <h2>Decentralized streaming with transparent royalty payouts</h2>
+                    </div>
+                    <div class="image-content">
+                        <img src="./images/fund.png" alt="Report" class="feature-img">
+                    </div>
+                </div>
+            </section>
+
+            <section class="feature-section reverse">
+                <div class="feature-content">
+                    <div class="text-content">
+                        <h2>Community tools</h2>
+                        <ul>
+                            <li>Connect directly with your favorite artists or your audience</li>
+                            <li>Create your own radio station</li>
+                            <li>Live chat with artists, djs, and curators</li>
+                            <li>Decentralized Radio Stations</li>
+                        </ul>
+                    </div>
+                    <div class="image-content">
+                        <img src="./images/chat.png" alt="Decentralized Streaming" class="feature-img">
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="feature-section ">
+                <div class="feature-content">
+                    <div class="text-content">
+                        <h2>Fund creation of new music and share royalties</h2>
+                    </div>
+                    <div class="image-content">
+                        <img src="./images/proposals.png" alt="Proposal" class="feature-img">
+                    </div>
+                </div>
+            </section>
+
+            <section class="contact-us" id="contact-us">
+                <h2>Contact Us</h2>
+                <form action="https://formsubmit.co/chris@mdrn.music" method="POST">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+                    <button type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </section>
+        </section>
+    
+
+        <footer class="footer">
+        <div class="footer-container">
+            <p>© 2024 MDRN. All rights reserved.</p>
         </div>
-    </div>
-    <div class="page-container">
-        <div class="mdrn-main">
-            <div class="main-content">
-                <div class="container">
-                    <img src="./images/mdrn_logo.png" alt="MDRN Logo">
-                    <br>
-                    <!-- New text under the logo -->
-                    <p class="subtitle"><u>Massively Distributed Radio Network</u><p>
-                    <br>
-                    <p class="subtitle1">Decentralized internet radio</p>
-                    <p class="subtitle2">Web3 music curation platform</p>
-                    <br>
+    </footer>
+    </main>
 
-                    <form action="https://mdrn.us11.list-manage.com/subscribe/post?u=68c915cbb592d293d6023eb24&amp;id=0f8a121b6b&amp;f_id=007c05e1f0" method="post" id="email-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                        <input type="email" name="EMAIL" placeholder="Join the waitlist" class="email-input" id="email-input" required>
-                        <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                            <input type="text" name="b_68c915cbb592d293d6023eb24_0f8a121b6b" tabindex="-1" value="">
-                        </div>
-                        <button type="submit" name="subscribe" class="send-button" id="send-button">></button>
-                    </form>
-                    <div id="confirmation-text" class="confirmation-text hidden">Talk to you soon...</div>
-                    <br>
-                    <div class="social-buttons">
-                        <a href="https://x.com/mdrnprotocol" target="_blank" class="btn lg neu">
-                            <i class="twitter-x-icon"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/christopher-rose-mdrn" target="_blank" class="btn lg neu">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="mailto:chris@mdrn.music" target="_blank" class="btn lg neu">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                        <a href="https://t.me/+Qa8B7XB1zs5mODhh" target="_blank" class="btn lg neu">
-                            <i class="fab fa-telegram-plane"></i>
-                        </a>
-                    </div>
-                    <!-- Contenedor del reproductor de audio -->
-                    <div class="audio-player">
-                        <audio id="audio" src="audio/f2-ride-party.mp3" autoplay></audio>
-                        <div class="buttons">
-                            <button id="play-pause" class="btn lg neu"><i class="fas fa-play"></i></button>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="footer">
-                        <p class="footer-text">Coming Soon</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="background">
-                <div class="circle circle1"></div>
-                <div class="circle circle2"></div>
-                <div class="circle circle3"></div>
-                <div class="circle circle4"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="mdrn-main">
-        <div class="main-content">
-            <div class="container2" data-aos="fade-in">
-                <div class="content1" data-aos="fade-down" id="about-us">
-                    <h1>MDRN MUSIC</h1>
-                    <div class="about-us" data-aos="zoom-in" data-aos-delay="100" data-aos-anchor-placement="bottom-bottom">
-                        <p>Decentralized streaming with transparent royalty payouts
-                            <br>
-                            <br>
-                            <!-- <button class="cta-button" onclick="window.location.href='waitlist.html'">Join Now</button> -->
-                            <img src="./images/report.png" alt="Report" class="feature-img">
-                    </div>
-                </div>
-                <div class="about-us">
-                    <h2>Community tools</h2>
-                    <p2>Connect directly with your favorite artists or your audience </p2>
-                    <br>
-                    <p2>Create your own radio station</p2>
-                    <br>
-                    <p2>Live chat with artists, djs, and curators</p2>
-                    <br>
-                    <br>
-                    <img src="./images/chat.png" alt="Decentralized Streaming" class="feature-img"  data-aos="zoom-in" data-aos-delay="300" data-aos-anchor-placement="bottom-bottom">
-                </div>
-                <div class="about-us">
-                    <h2>Features</h2>
-                    <div class="feature">
-                        <h3><u>Decentralized Radio Stations</u></h3>
-                        <img src="./images/demo-wireframe.png" alt="Decentralized Streaming" class="feature-img"  data-aos="zoom-in" data-aos-delay="300" data-aos-anchor-placement="bottom-bottom">
-                        <br>
-                        <p></p>
-                        <h2><u>Fund creation of new music and share royalties</u></h3>
-                        <br>
-                        <img src="./images/proposals.png" alt="Proposal" class="feature-img" data-aos="zoom-in" data-aos-delay="1000" data-aos-anchor-placement="bottom-bottom">
-                    </div>
-                </div>
-                <div class="contact-us" id="contact-us">
-                    <h2>Contact Us</h2>
-                    <form action="https://formsubmit.co/chris@mdrn.music" method="POST">
-                        <input type="text" name="name" placeholder="Your Name" required>
-                        <input type="email" name="email" placeholder="Your Email" required>
-                        <textarea name="message" placeholder="Your Message" required></textarea>
-                        <button type="submit">Send</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer-container">
-        <footer>
-            <!-- Footer content goes here -->
-            <p>© 2024 MDRN MUSIC all rights reserved.</p>
-        </footer>
-    </div>
-
-    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+<script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+<script src="script.js"></script>
 </body>
 
 </html>
