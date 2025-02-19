@@ -170,7 +170,7 @@ main {
     font-size: 1.2em;
     color: #F7F7F7;
     text-align: center;
-    font-weight: normal;
+    font-weight: 100;
 }
 
 .container {
@@ -284,7 +284,7 @@ h3 {
     font-weight: normal;
     text-decoration: none;
     line-height: 1.2;
-    
+
 }
 
 
@@ -743,14 +743,19 @@ footer {
     position: relative;
     bottom: 0;
     margin-top: auto;
-    display: flex;           /* Añadido para centrar */
-    justify-content: center; /* Centrado horizontal */
-    align-items: center;     /* Centrado vertical */
+    display: flex;           /* Ensure flexbox is used */
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    padding: 10px 0;         /* Add padding for spacing */
+    font-weight: 500;
 }
 
 .footer-container {
-    padding: 10px 0;        /* Cambiado de auto a 0 */
+    width: 100%;             /* Ensure full width */
+    max-width: 1200px;       /* Optional: limit max width */
+    margin: 0 auto;          /* Center the container */
     text-align: center;
+    font-weight: 100;
 }
 
 /*
@@ -816,5 +821,31 @@ button {
 .content-wrapper {
     position: relative;
     z-index: 2;
+}
+
+#hidden-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+#hidden-content.expanded {
+    max-height: 1000px; /* Adjust this value based on the content size */
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#hidden-content.expanded * {
+    animation: zoomIn 0.5s ease-out;
+    animation-fill-mode: forwards; /* Ensure the animation stays at the end state */
 }
 
