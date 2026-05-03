@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        * { margin: 0; padding: 0; }
+        body { background: #f4ede4; overflow: hidden; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        svg { max-width: 100%; max-height: 100vh; }
+    </style>
+</head>
+<body>
+    <svg viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&amp;display=swap');
+                text { font-family: 'Space Grotesk', sans-serif; }
+            </style>
+        </defs>
+
+        <!-- MDRN: The containing circle / infrastructure -->
+        <circle cx="800" cy="450" r="340" fill="none" stroke="#0a0a0e" stroke-width="3"/>
+        <circle cx="800" cy="450" r="335" fill="none" stroke="#0a0a0e" stroke-width="0.5" opacity="0.3"/>
+        
+        <!-- Inner ring (the network backbone) -->
+        <circle cx="800" cy="450" r="280" fill="none" stroke="#0a0a0e" stroke-width="0.5" stroke-dasharray="4 8" opacity="0.4"/>
+
+        <!-- SUBCULT: Varied polygons (each community is unique) -->
+        <!-- Large triangle - scene 1 -->
+        <polygon points="680,340 750,440 610,440" fill="#0a0a0e" opacity="0.9"/>
+        
+        <!-- Square - scene 2 -->
+        <rect x="820" y="350" width="80" height="80" fill="#0a0a0e" opacity="0.85"/>
+        
+        <!-- Hexagon - scene 3 -->
+        <polygon points="750,530 780,510 810,530 810,560 780,580 750,560" fill="#0a0a0e" opacity="0.9"/>
+        
+        <!-- Small triangle - scene 4 -->
+        <polygon points="890,500 930,560 850,560" fill="#0a0a0e" opacity="0.8"/>
+        
+        <!-- Diamond - scene 5 -->
+        <polygon points="670,500 700,470 730,500 700,530" fill="#0a0a0e" opacity="0.85"/>
+        
+        <!-- Pentagon - scene 6 -->
+        <polygon points="940,400 970,420 960,450 920,450 910,420" fill="#0a0a0e" opacity="0.75"/>
+        
+        <!-- Small square - scene 7 -->
+        <rect x="780" y="460" width="40" height="40" fill="#0a0a0e" opacity="0.7" transform="rotate(15 800 480)"/>
+
+        <!-- Tiny scattered shapes -->
+        <circle cx="640" cy="420" r="8" fill="#0a0a0e" opacity="0.5"/>
+        <circle cx="860" cy="480" r="6" fill="#0a0a0e" opacity="0.4"/>
+        <rect x="720" y="380" width="15" height="15" fill="#0a0a0e" opacity="0.4" transform="rotate(30 727 387)"/>
+        <polygon points="930,450 940,435 950,450" fill="#0a0a0e" opacity="0.4"/>
+
+        <!-- ONDA: Spiral/flow connecting all shapes -->
+        <path d="M 680 390 C 720 360, 800 330, 850 380 C 900 430, 880 500, 830 530 C 780 560, 720 550, 700 500 C 680 450, 750 420, 800 440 C 850 460, 870 510, 830 540" 
+              fill="none" stroke="#0a0a0e" stroke-width="2" stroke-linecap="round"/>
+        
+        <!-- Secondary flow lines -->
+        <path d="M 660 440 C 700 480, 740 520, 780 540 C 820 560, 870 530, 900 500" 
+              fill="none" stroke="#0a0a0e" stroke-width="1" opacity="0.5" stroke-dasharray="2 4"/>
+        
+        <path d="M 910 420 C 880 460, 840 490, 790 480 C 740 470, 700 430, 680 400" 
+              fill="none" stroke="#0a0a0e" stroke-width="1" opacity="0.4" stroke-dasharray="3 5"/>
+
+        <!-- Flow direction dots along the spiral -->
+        <circle cx="720" cy="355" r="3" fill="#0a0a0e"/>
+        <circle cx="850" cy="380" r="3" fill="#0a0a0e"/>
+        <circle cx="870" cy="470" r="3" fill="#0a0a0e"/>
+        <circle cx="780" cy="555" r="3" fill="#0a0a0e"/>
+        <circle cx="730" cy="510" r="3" fill="#0a0a0e"/>
+        <circle cx="810" cy="445" r="3" fill="#0a0a0e"/>
+
+        <!-- Radiating lines from outer circle (broadcast/signal) -->
+        <line x1="800" y1="110" x2="800" y2="80" stroke="#0a0a0e" stroke-width="1.5" opacity="0.6"/>
+        <line x1="800" y1="790" x2="800" y2="820" stroke="#0a0a0e" stroke-width="1.5" opacity="0.6"/>
+        <line x1="460" y1="450" x2="430" y2="450" stroke="#0a0a0e" stroke-width="1.5" opacity="0.6"/>
+        <line x1="1140" y1="450" x2="1170" y2="450" stroke="#0a0a0e" stroke-width="1.5" opacity="0.6"/>
+        
+        <!-- Diagonal radiants -->
+        <line x1="565" y1="215" x2="545" y2="195" stroke="#0a0a0e" stroke-width="1" opacity="0.4"/>
+        <line x1="1035" y1="215" x2="1055" y2="195" stroke="#0a0a0e" stroke-width="1" opacity="0.4"/>
+        <line x1="565" y1="685" x2="545" y2="705" stroke="#0a0a0e" stroke-width="1" opacity="0.4"/>
+        <line x1="1035" y1="685" x2="1055" y2="705" stroke="#0a0a0e" stroke-width="1" opacity="0.4"/>
+
+        <!-- Typography -->
+        <!-- MDRN - bold, top -->
+        <text x="800" y="60" text-anchor="middle" font-size="42" font-weight="700" fill="#0a0a0e" letter-spacing="12">MDRN</text>
+        <text x="800" y="85" text-anchor="middle" font-size="10" fill="#0a0a0e" opacity="0.5" letter-spacing="4">THE NETWORK</text>
+
+        <!-- SUBCULT - fragmented around shapes -->
+        <text x="600" y="330" font-size="11" fill="#0a0a0e" opacity="0.6" letter-spacing="3">SUB</text>
+        <text x="950" y="390" font-size="11" fill="#0a0a0e" opacity="0.6" letter-spacing="3">CULT</text>
+        <text x="620" y="590" font-size="9" fill="#0a0a0e" opacity="0.4" letter-spacing="2">communities</text>
+
+        <!-- ONDA - following the curve -->
+        <text x="980" y="550" font-size="11" fill="#0a0a0e" opacity="0.6" letter-spacing="3">ONDA</text>
+        <text x="980" y="567" font-size="9" fill="#0a0a0e" opacity="0.4" letter-spacing="2">value flow</text>
+
+        <!-- Bottom descriptor -->
+        <text x="800" y="860" text-anchor="middle" font-size="10" fill="#0a0a0e" opacity="0.35" letter-spacing="2">INFRASTRUCTURE FOR UNDERGROUND MUSIC</text>
+
+        <!-- Constructivist accent lines -->
+        <line x1="100" y1="50" x2="300" y2="50" stroke="#0a0a0e" stroke-width="2"/>
+        <line x1="1300" y1="850" x2="1500" y2="850" stroke="#0a0a0e" stroke-width="2"/>
+        <line x1="100" y1="850" x2="100" y2="750" stroke="#0a0a0e" stroke-width="1" opacity="0.5"/>
+        <line x1="1500" y1="50" x2="1500" y2="150" stroke="#0a0a0e" stroke-width="1" opacity="0.5"/>
+    </svg>
+</body>
+</html>

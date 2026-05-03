@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #0a0a0e; overflow: hidden; cursor: default; }
+        #bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+
+        #info-panel {
+            position: fixed;
+            right: -440px;
+            top: 0;
+            width: 420px;
+            height: 100%;
+            background: rgba(8, 8, 12, 0.92);
+            backdrop-filter: blur(30px);
+            border-left: 1px solid rgba(232, 224, 212, 0.08);
+            padding: 60px 40px;
+            transition: right 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10;
+            font-family: 'Inter', sans-serif;
+            color: #e8e0d4;
+            overflow-y: auto;
+        }
+        #info-panel.open { right: 0; }
+        #info-panel .close-btn {
+            position: absolute; top: 20px; right: 24px;
+            font-size: 20px; color: #e8e0d4; opacity: 0.4;
+            cursor: pointer; background: none; border: none; padding: 8px;
+            transition: opacity 0.3s;
+        }
+        #info-panel .close-btn:hover { opacity: 1; }
+        #info-panel .tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+            opacity: 0.3; margin-bottom: 12px;
+        }
+        #info-panel h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 32px; font-weight: 300; letter-spacing: 2px;
+            margin-bottom: 28px;
+        }
+        #info-panel p {
+            font-size: 14px; line-height: 1.8; opacity: 0.6;
+            margin-bottom: 20px; font-weight: 300;
+        }
+        #info-panel .stat {
+            display: flex; justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(232, 224, 212, 0.05);
+            font-size: 12px;
+        }
+        #info-panel .stat .label {
+            opacity: 0.3; font-family: 'Space Mono', monospace;
+            font-size: 9px; letter-spacing: 1.5px;
+        }
+        #info-panel .stat .value { opacity: 0.7; font-weight: 300; }
+        #info-panel .features { margin-top: 28px; }
+        #info-panel .features li {
+            list-style: none; padding: 8px 0;
+            font-size: 13px; opacity: 0.5; font-weight: 300;
+        }
+        #info-panel .features li::before { content: '— '; opacity: 0.3; }
+
+        .hint {
+            position: fixed; bottom: 28px; left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Space Mono', monospace;
+            font-size: 9px; color: #e8e0d4; opacity: 0.2;
+            letter-spacing: 3px; pointer-events: none;
+            transition: opacity 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bg"></canvas>
+    <canvas id="overlay"></canvas>
+
+    <div id="info-panel">
+        <button class="close-btn" onclick="zoomOut()">✕</button>
+        <div id="panel-content"></div>
+    </div>
+
+    <div class="hint" id="hint">SELECT A NODE</div>
+
+    <!-- Background shader -->
+    <script>
+    (function() {
+        const canvas = document.getElementById('bg');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) return;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const vsrc = `
+            attribute vec2 pos;
+            void main() { gl_Position = vec4(pos, 0.0, 1.0); }
+        `;
+
+        const fsrc = `
+            precision highp float;
+            uniform float u_time;
+            uniform vec2 u_res;
+            uniform vec2 u_mouse;
+
+            // Simplex-ish noise
+            vec3 mod289(vec3 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
+            vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
+            vec4 perm(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
+
+            float noise(vec3 p) {
+                vec3 a = floor(p);
+                vec3 d = p - a;
+                d = d * d * (3.0 - 2.0 * d);
+                vec4 b = a.xxyy + vec4(0.0, 1.0, 0.0, 1.0);
+                vec4 k1 = perm(b.xyxy);
+                vec4 k2 = perm(k1.xyxy + b.zzww);
+                vec4 c = k2 + a.zzzz;
+                vec4 k3 = perm(c);
+                vec4 k4 = perm(c + 1.0);
+                vec4 o1 = fract(k3 * (1.0/41.0));
+                vec4 o2 = fract(k4 * (1.0/41.0));
+                vec4 o3 = o2 * d.z + o1 * (1.0 - d.z);
+                vec2 o4 = o3.yw * d.x + o3.xz * (1.0 - d.x);
+                return o4.y * d.y + o4.x * (1.0 - d.y);
+            }
+
+            float fbm(vec3 p) {
+                float v = 0.0;
+                float a = 0.5;
+                vec3 shift = vec3(100.0);
+                for (int i = 0; i < 5; i++) {
+                    v += a * noise(p);
+                    p = p * 2.0 + shift;
+                    a *= 0.5;
+                }
+                return v;
+            }
+
+            void main() {
+                vec2 uv = gl_FragCoord.xy / u_res;
+                vec2 p = uv * 3.0;
+
+                float t = u_time * 0.15;
+
+                // Warped domain
+                float n1 = fbm(vec3(p * 1.2 + t * 0.3, t * 0.5));
+                float n2 = fbm(vec3(p * 1.5 + n1 * 1.5 + t * 0.2, t * 0.3 + 10.0));
+                float n3 = fbm(vec3(p * 2.0 + n2 * 1.2, t * 0.4 + 20.0));
+
+                // Mouse influence
+                vec2 mp = u_mouse / u_res;
+                float md = length(uv - mp);
+                float mInf = smoothstep(0.4, 0.0, md) * 0.15;
+
+                float final_n = fbm(vec3(p + vec2(n2, n3) * 1.3 + mInf, t * 0.2));
+
+                // Color: dark with warm amber/gold/olive folds
+                vec3 col1 = vec3(0.04, 0.03, 0.02); // deep dark
+                vec3 col2 = vec3(0.35, 0.25, 0.08); // warm amber
+                vec3 col3 = vec3(0.15, 0.18, 0.06); // olive
+                vec3 col4 = vec3(0.45, 0.30, 0.10); // gold highlight
+
+                vec3 color = mix(col1, col2, smoothstep(0.3, 0.6, final_n));
+                color = mix(color, col3, smoothstep(0.4, 0.7, n2));
+                color = mix(color, col4, smoothstep(0.55, 0.75, final_n) * 0.6);
+
+                // Darken edges (vignette)
+                float vig = 1.0 - smoothstep(0.3, 1.2, length(uv - 0.5) * 1.4);
+                color *= vig * 1.2;
+
+                // Keep it moody — clamp brightness
+                color = clamp(color, 0.0, 0.4);
+
+                gl_FragColor = vec4(color, 1.0);
+            }
+        `;
+
+        function compileShader(src, type) {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            return s;
+        }
+
+        const prog = gl.createProgram();
+        gl.attachShader(prog, compileShader(vsrc, gl.VERTEX_SHADER));
+        gl.attachShader(prog, compileShader(fsrc, gl.FRAGMENT_SHADER));
+        gl.linkProgram(prog);
+        gl.useProgram(prog);
+
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+        const posLoc = gl.getAttribLocation(prog, 'pos');
+        gl.enableVertexAttribArray(posLoc);
+        gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+        const uTime = gl.getUniformLocation(prog, 'u_time');
+        const uRes = gl.getUniformLocation(prog, 'u_res');
+        const uMouse = gl.getUniformLocation(prog, 'u_mouse');
+
+        let mx = window.innerWidth/2, my = window.innerHeight/2;
+        window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+        function render(t) {
+            requestAnimationFrame(render);
+            gl.uniform1f(uTime, t * 0.001);
+            gl.uniform2f(uRes, canvas.width, canvas.height);
+            gl.uniform2f(uMouse, mx, canvas.height - my);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        }
+        requestAnimationFrame(render);
+    })();
+    </script>
+
+    <!-- Overlay: interactive diagram -->
+    <script>
+    (function() {
+        const canvas = document.getElementById('overlay');
+        const ctx = canvas.getContext('2d');
+        const panel = document.getElementById('info-panel');
+        const panelContent = document.getElementById('panel-content');
+        const hintEl = document.getElementById('hint');
+
+        let W, H;
+        function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const cream = '#e8e0d4';
+
+        // Camera
+        let cam = { x: 0.5, y: 0.45, zoom: 1 };
+        let camTarget = { x: 0.5, y: 0.45, zoom: 1 };
+        let zoomed = false, selectedNode = null, hoverNode = null;
+
+        // Nodes
+        const nodes = [
+            {
+                id: 'mdrn', type: 'core', x: 0.5, y: 0.42, size: 0.1,
+                label: 'MDRN',
+                info: {
+                    tag: 'Infrastructure', title: 'MDRN',
+                    desc: 'The Massively Distributed Radio Network. A shared backbone connecting independent music communities worldwide. No central server — each node is sovereign.',
+                    stats: [['TYPE', 'Mesh Network'], ['PROTOCOL', 'P2P Radio Infrastructure'], ['NODES', 'Unlimited'], ['GOVERNANCE', 'Federated']],
+                    features: ['Shared discovery layer across all communities', 'Cross-station content relay', 'Decentralized — no single point of failure', 'Open protocol anyone can build on']
+                }
+            },
+            {
+                id: 'subcult', type: 'community', x: 0.2, y: 0.35, size: 0.06,
+                label: 'SUBCULT',
+                info: {
+                    tag: 'Communities', title: 'Subcult',
+                    desc: 'Individual communities — radio stations, labels, collectives, scenes. Each one sovereign. Each one curated by humans. Connected through MDRN but never controlled by it.',
+                    stats: [['TYPE', 'Community Nodes'], ['CURATION', 'Human-First'], ['IDENTITY', 'Independent'], ['SCALE', '200 engaged > 1M passive']],
+                    features: ['Each community owns its catalog and identity', 'Curators are recognized and compensated', 'Listeners support scenes directly', 'No algorithmic feeds — trust-based discovery']
+                }
+            },
+            {
+                id: 'onda', type: 'protocol', x: 0.8, y: 0.52, size: 0.055,
+                label: 'ONDA',
+                info: {
+                    tag: 'Payment Protocol', title: 'Onda',
+                    desc: 'A payment layer for patronage on top of all music infrastructure. Every play event splits micropayments between the artist, the curator who surfaced the track, and the community.',
+                    stats: [['TYPE', 'Micropayment Rails'], ['CHAIN', 'Base (L2)'], ['SPLIT', 'Artist / Curator / Community'], ['FEE', '0% platform cut']],
+                    features: ['On-chain revenue splits — transparent and instant', 'Artists earn from play one', 'Curators compensated for discovery labor', 'No 30% platform tax']
+                }
+            },
+            {
+                id: 's1', type: 'station', x: 0.33, y: 0.63, size: 0.035,
+                label: '88.1',
+                info: {
+                    tag: 'Station Node', title: 'Station 88.1',
+                    desc: 'A pirate radio collective running experimental ambient and noise. 15 curators, 340 listeners. Broadcasting from a basement in Berlin.',
+                    stats: [['GENRE', 'Ambient / Noise'], ['CURATORS', '15'], ['LISTENERS', '340'], ['REVENUE', '$1,280/mo']],
+                    features: ['Weekly live broadcasts', 'Collaborative playlists', 'Direct listener patronage via Onda']
+                }
+            },
+            {
+                id: 's2', type: 'station', x: 0.62, y: 0.27, size: 0.03,
+                label: '96.3',
+                info: {
+                    tag: 'Station Node', title: 'Station 96.3',
+                    desc: 'A label-run node focused on deep house and Afro-electronic. Curated by 3 label heads.',
+                    stats: [['GENRE', 'Deep House / Afroelectronic'], ['CURATORS', '3'], ['LISTENERS', '890'], ['REVENUE', '$3,100/mo']],
+                    features: ['Label catalog integration', 'Premiere drops', 'Cross-pollination via MDRN relay']
+                }
+            },
+            {
+                id: 's3', type: 'station', x: 0.87, y: 0.36, size: 0.025,
+                label: '107.5',
+                info: {
+                    tag: 'Station Node', title: 'Station 107.5',
+                    desc: 'A solo DJ running a drum & bass micro-station from Lagos. Small but fiercely loyal audience.',
+                    stats: [['GENRE', 'Drum & Bass'], ['CURATORS', '1'], ['LISTENERS', '85'], ['REVENUE', '$220/mo']],
+                    features: ['Single-curator station', 'Global audience via MDRN', 'Direct payments — no bank required']
+                }
+            },
+            {
+                id: 's4', type: 'station', x: 0.13, y: 0.56, size: 0.028,
+                label: '91.7',
+                info: {
+                    tag: 'Station Node', title: 'Station 91.7',
+                    desc: 'Community radio revival — a neighborhood FM station in Oakland that added Subcult as a digital mirror.',
+                    stats: [['GENRE', 'Eclectic / Community'], ['CURATORS', '22'], ['LISTENERS', '1,200'], ['REVENUE', '$4,500/mo']],
+                    features: ['FM + digital simulcast', 'Neighborhood-first programming', 'Onda tips during live shows']
+                }
+            },
+        ];
+
+        // Edges
+        const edges = [
+            ['mdrn','subcult'],['mdrn','onda'],['mdrn','s1'],['mdrn','s2'],['mdrn','s3'],['mdrn','s4'],
+            ['subcult','s1'],['subcult','s4'],['onda','s2'],['onda','s3'],['s1','onda'],['s4','onda']
+        ];
+
+        // Particles
+        const particles = [];
+        for (const [a, b] of edges) {
+            for (let i = 0; i < 5; i++) {
+                particles.push({ from: a, to: b, t: Math.random(), speed: 0.0006 + Math.random() * 0.001 });
+            }
+        }
+
+        // Transform
+        function toScreen(wx, wy) {
+            return [(wx - cam.x) * cam.zoom * W + W/2, (wy - cam.y) * cam.zoom * H + H/2];
+        }
+        function fromScreen(sx, sy) {
+            return [(sx - W/2) / (cam.zoom * W) + cam.x, (sy - H/2) / (cam.zoom * H) + cam.y];
+        }
+
+        // Zoom
+        window.zoomOut = function() {
+            selectedNode = null; zoomed = false;
+            camTarget = { x: 0.5, y: 0.45, zoom: 1 };
+            panel.classList.remove('open');
+            setTimeout(() => hintEl.style.opacity = '0.2', 600);
+        };
+
+        function zoomTo(node) {
+            selectedNode = node; zoomed = true;
+            camTarget = { x: node.x, y: node.y, zoom: node.type === 'core' ? 2.8 : 3.8 };
+            panel.classList.add('open');
+            hintEl.style.opacity = '0';
+            let html = `<div class="tag">${node.info.tag}</div><h2>${node.info.title}</h2><p>${node.info.desc}</p>`;
+            for (const [l, v] of node.info.stats) html += `<div class="stat"><span class="label">${l}</span><span class="value">${v}</span></div>`;
+            html += '<ul class="features">';
+            for (const f of node.info.features) html += `<li>${f}</li>`;
+            html += '</ul>';
+            panelContent.innerHTML = html;
+        }
+
+        canvas.addEventListener('click', e => {
+            if (zoomed) { zoomOut(); return; }
+            const [wx, wy] = fromScreen(e.clientX, e.clientY);
+            for (const n of nodes) {
+                if (Math.hypot(wx - n.x, wy - n.y) < n.size * 1.3) { zoomTo(n); return; }
+            }
+        });
+
+        canvas.addEventListener('mousemove', e => {
+            if (zoomed) { canvas.style.cursor = 'zoom-out'; return; }
+            const [wx, wy] = fromScreen(e.clientX, e.clientY);
+            hoverNode = null;
+            for (const n of nodes) {
+                if (Math.hypot(wx - n.x, wy - n.y) < n.size * 1.3) { hoverNode = n; break; }
+            }
+            canvas.style.cursor = hoverNode ? 'pointer' : 'default';
+        });
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') zoomOut(); });
+
+        let time = 0;
+
+        function draw() {
+            requestAnimationFrame(draw);
+            time += 0.016;
+
+            // Lerp camera
+            cam.x += (camTarget.x - cam.x) * 0.045;
+            cam.y += (camTarget.y - cam.y) * 0.045;
+            cam.zoom += (camTarget.zoom - cam.zoom) * 0.045;
+
+            ctx.clearRect(0, 0, W, H);
+
+            // --- Edges: smooth curves ---
+            for (const [aId, bId] of edges) {
+                const a = nodes.find(n => n.id === aId);
+                const b = nodes.find(n => n.id === bId);
+                const [ax, ay] = toScreen(a.x, a.y);
+                const [bx, by] = toScreen(b.x, b.y);
+                const mx = (ax + bx) / 2;
+                const my = (ay + by) / 2 - 20 * cam.zoom;
+
+                ctx.beginPath();
+                ctx.moveTo(ax, ay);
+                ctx.quadraticCurveTo(mx + (by - ay) * 0.15, my, bx, by);
+                ctx.strokeStyle = 'rgba(232, 224, 212, 0.06)';
+                ctx.lineWidth = 0.8;
+                ctx.stroke();
+            }
+
+            // --- Particles along edges ---
+            for (const p of particles) {
+                p.t += p.speed;
+                if (p.t > 1) p.t -= 1;
+                const a = nodes.find(n => n.id === p.from);
+                const b = nodes.find(n => n.id === p.to);
+                const [ax, ay] = toScreen(a.x, a.y);
+                const [bx, by] = toScreen(b.x, b.y);
+                const mx = (ax + bx) / 2 + (by - ay) * 0.15;
+                const my = (ay + by) / 2 - 20 * cam.zoom;
+
+                const t = p.t, it = 1 - t;
+                const px = it*it*ax + 2*it*t*mx + t*t*bx;
+                const py = it*it*ay + 2*it*t*my + t*t*by;
+
+                const alpha = Math.sin(t * Math.PI) * 0.4;
+                ctx.beginPath();
+                ctx.arc(px, py, 1.5 * cam.zoom, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(232, 224, 212, ${alpha})`;
+                ctx.fill();
+            }
+
+            // --- Nodes ---
+            for (const node of nodes) {
+                const [nx, ny] = toScreen(node.x, node.y);
+                const r = node.size * Math.min(W, H) * cam.zoom;
+                const isHover = hoverNode === node;
+                const pulse = 1 + Math.sin(time * 1.5 + nodes.indexOf(node) * 1.3) * 0.02;
+
+                // Outer rings — soft, breathing
+                for (let ring = 0; ring < 3; ring++) {
+                    const rr = r * (1.3 + ring * 0.4) * pulse;
+                    const alpha = 0.04 - ring * 0.012;
+                    ctx.beginPath();
+                    ctx.arc(nx, ny, rr, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(232, 224, 212, ${alpha})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+
+                // Main circle
+                const mainAlpha = isHover ? 0.7 : 0.35;
+                ctx.beginPath();
+                ctx.arc(nx, ny, r * pulse, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(232, 224, 212, ${mainAlpha})`;
+                ctx.lineWidth = isHover ? 1.5 : 0.8;
+                ctx.stroke();
+
+                // Inner ring
+                ctx.beginPath();
+                ctx.arc(nx, ny, r * 0.45 * pulse, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(232, 224, 212, ${mainAlpha * 0.4})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+
+                // Center dot
+                ctx.beginPath();
+                ctx.arc(nx, ny, 2.5 * cam.zoom, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(232, 224, 212, ${isHover ? 0.9 : 0.6})`;
+                ctx.fill();
+
+                // Hover glow
+                if (isHover && !zoomed) {
+                    const grad = ctx.createRadialGradient(nx, ny, 0, nx, ny, r * 1.8);
+                    grad.addColorStop(0, 'rgba(232, 224, 212, 0.06)');
+                    grad.addColorStop(1, 'transparent');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(nx, ny, r * 1.8, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Label
+                const fontSize = Math.max(9, (node.type === 'core' ? 13 : node.type === 'station' ? 9 : 11) * cam.zoom);
+                ctx.font = `300 ${fontSize}px 'Inter', sans-serif`;
+                ctx.fillStyle = `rgba(232, 224, 212, ${isHover ? 0.8 : 0.35})`;
+                ctx.textAlign = 'center';
+                ctx.fillText(node.label, nx, ny + r + 16 * cam.zoom);
+
+                // Type subtitle (only on zoom)
+                if (cam.zoom > 1.5) {
+                    const subSize = Math.max(7, 8 * cam.zoom);
+                    ctx.font = `300 ${subSize}px 'Space Mono', monospace`;
+                    ctx.fillStyle = `rgba(232, 224, 212, 0.2)`;
+                    ctx.fillText(node.info.tag.toLowerCase(), nx, ny + r + 28 * cam.zoom);
+                }
+            }
+        }
+
+        draw();
+    })();
+    </script>
+</body>
+</html>

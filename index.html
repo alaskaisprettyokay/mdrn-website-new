@@ -42,24 +42,10 @@
             pointer-events: none;
         }
 
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-        }
-
-        .orb-1 {
-            width: 600px; height: 600px;
-            background: radial-gradient(circle, rgba(120, 50, 220, 0.4), rgba(30, 100, 255, 0.15) 50%, transparent 70%);
-            top: -80px; left: -60px;
-            animation: drift1 30s infinite ease-in-out alternate;
-        }
-
-        .orb-2 {
-            width: 500px; height: 500px;
-            background: radial-gradient(circle, rgba(220, 60, 40, 0.3), rgba(255, 120, 50, 0.1) 50%, transparent 70%);
-            bottom: 10%; right: -100px;
-            animation: drift2 25s infinite ease-in-out alternate;
+        #bg-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
         }
 
         @keyframes drift1 {
@@ -408,8 +394,7 @@
 <body>
 
     <div class="ambient">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
+        <canvas id="bg-canvas"></canvas>
     </div>
 
     <div class="audio-bar">
@@ -517,6 +502,223 @@
                 document.getElementById('email-form').style.display = 'none';
             }, 500);
         });
+    </script>
+
+    <!-- Three.js background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+    (function() {
+        const canvas = document.getElementById('bg-canvas');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.z = 4;
+
+        // Smooth morphing sphere
+        const geo = new THREE.IcosahedronGeometry(1.2, 64);
+        const posAttr = geo.attributes.position;
+        const basePositions = new Float32Array(posAttr.array);
+
+        const mat = new THREE.MeshStandardMaterial({
+            color: 0x4422aa,
+            emissive: 0x220066,
+            emissiveIntensity: 0.3,
+            roughness: 0.6,
+            metalness: 0.4,
+            transparent: true,
+            opacity: 0.7
+        });
+
+        const mesh = new THREE.Mesh(geo, mat);
+        scene.add(mesh);
+
+        // Lights
+        const light1 = new THREE.PointLight(0x7744ff, 1.5, 10);
+        light1.position.set(2, 2, 3);
+        scene.add(light1);
+
+        const light2 = new THREE.PointLight(0xcc3322, 1, 8);
+        light2.position.set(-3, -1, 2);
+        scene.add(light2);
+
+        scene.add(new THREE.AmbientLight(0x111122, 0.5));
+
+        // --- Effects canvas (anamorphic + bokeh) ---
+        const streakCanvas = document.createElement('canvas');
+        streakCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;mix-blend-mode:screen;';
+        document.querySelector('.ambient').appendChild(streakCanvas);
+        const ctx = streakCanvas.getContext('2d');
+
+        function resizeStreak() {
+            streakCanvas.width = window.innerWidth;
+            streakCanvas.height = window.innerHeight;
+        }
+        resizeStreak();
+
+        // Project 3D sphere position to 2D screen coords
+        function projectToScreen(obj, cam, w, h) {
+            const vec = new THREE.Vector3();
+            vec.setFromMatrixPosition(obj.matrixWorld);
+            vec.project(cam);
+            return {
+                x: (vec.x * 0.5 + 0.5) * w,
+                y: (-vec.y * 0.5 + 0.5) * h
+            };
+        }
+
+        // --- Bokeh particles (orbit around sphere) ---
+        const bokehCount = 45;
+        const bokehParticles = [];
+        for (let i = 0; i < bokehCount; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 0.15 + Math.random() * 0.3; // normalized distance from center
+            bokehParticles.push({
+                angle: angle,
+                radius: radius,
+                orbitSpeed: 0.0003 + Math.random() * 0.0008,
+                driftY: (Math.random() - 0.5) * 0.0002,
+                size: 6 + Math.random() * 30,
+                opacity: 0.05 + Math.random() * 0.14,
+                hue: Math.random() > 0.5 ? 260 + Math.random() * 30 : 0 + Math.random() * 20,
+                phase: Math.random() * Math.PI * 2,
+                yOffset: (Math.random() - 0.5) * 0.4
+            });
+        }
+
+        // Noise
+        function noise3D(x, y, z) {
+            const p = x * 1.1 + y * 2.3 + z * 3.7;
+            return Math.sin(p) * Math.cos(y * 1.7 + z) * Math.sin(z * 2.1 + x);
+        }
+
+        let time = 0;
+        let audioPlaying = false;
+        const audioEl = document.getElementById('audio');
+        audioEl.addEventListener('play', () => audioPlaying = true);
+        audioEl.addEventListener('pause', () => audioPlaying = false);
+        audioEl.addEventListener('ended', () => audioPlaying = false);
+
+        function drawEffects() {
+            const w = streakCanvas.width, h = streakCanvas.height;
+            ctx.clearRect(0, 0, w, h);
+
+            // Get sphere center on screen
+            const center = projectToScreen(mesh, camera, w, h);
+
+            // Bokeh circles — orbit around the sphere
+            for (const p of bokehParticles) {
+                p.angle += p.orbitSpeed * (audioPlaying ? 3 : 1);
+                p.yOffset += p.driftY;
+                if (Math.abs(p.yOffset) > 0.4) p.driftY *= -1;
+
+                const orbitRadius = p.radius * Math.min(w, h) * (audioPlaying ? 1.2 : 1);
+                const px = center.x + Math.cos(p.angle) * orbitRadius;
+                const py = center.y + Math.sin(p.angle) * orbitRadius * 0.6 + p.yOffset * h;
+
+                const pulse = 1 + Math.sin(time * 3 + p.phase) * 0.25;
+                const size = p.size * pulse * (audioPlaying ? 1.4 : 1);
+
+                // Distance falloff — particles closer to sphere are brighter
+                const dist = Math.hypot(px - center.x, py - center.y) / (Math.min(w,h) * 0.5);
+                const falloff = Math.max(0, 1 - dist * 0.8);
+
+                const grad = ctx.createRadialGradient(px, py, 0, px, py, size);
+                const alpha = p.opacity * (0.5 + falloff * 0.5) * (audioPlaying ? 1.5 : 1);
+                grad.addColorStop(0, `hsla(${p.hue}, 70%, 60%, ${alpha})`);
+                grad.addColorStop(0.4, `hsla(${p.hue}, 60%, 45%, ${alpha * 0.4})`);
+                grad.addColorStop(1, 'transparent');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(px, py, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Anamorphic streaks — emanate from sphere center
+            const streakPulse = 1 + Math.sin(time * 2.5) * 0.3;
+            const streakWidth = w * (audioPlaying ? 0.9 : 0.55) * streakPulse;
+
+            // Main purple streak
+            const grad1 = ctx.createLinearGradient(center.x - streakWidth/2, center.y, center.x + streakWidth/2, center.y);
+            const a1 = (audioPlaying ? 0.35 : 0.18) * streakPulse;
+            grad1.addColorStop(0, 'transparent');
+            grad1.addColorStop(0.2, `rgba(120, 70, 255, ${a1 * 0.3})`);
+            grad1.addColorStop(0.5, `rgba(120, 70, 255, ${a1})`);
+            grad1.addColorStop(0.8, `rgba(120, 70, 255, ${a1 * 0.3})`);
+            grad1.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad1;
+            ctx.fillRect(center.x - streakWidth/2, center.y - 2, streakWidth, 4);
+
+            // Secondary warm streak (slightly offset)
+            const grad2 = ctx.createLinearGradient(center.x - streakWidth*0.4, center.y, center.x + streakWidth*0.4, center.y);
+            const a2 = (audioPlaying ? 0.25 : 0.1) * streakPulse;
+            grad2.addColorStop(0, 'transparent');
+            grad2.addColorStop(0.3, `rgba(200, 50, 40, ${a2 * 0.4})`);
+            grad2.addColorStop(0.5, `rgba(200, 50, 40, ${a2})`);
+            grad2.addColorStop(0.7, `rgba(200, 50, 40, ${a2 * 0.4})`);
+            grad2.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad2;
+            ctx.fillRect(center.x - streakWidth*0.4, center.y + 8, streakWidth*0.8, 2.5);
+
+            // Soft glow halo around sphere
+            const glowSize = 120 * (audioPlaying ? 1.5 : 1) * streakPulse;
+            const glowGrad = ctx.createRadialGradient(center.x, center.y, 0, center.x, center.y, glowSize);
+            const ga = audioPlaying ? 0.12 : 0.06;
+            glowGrad.addColorStop(0, `rgba(100, 60, 200, ${ga})`);
+            glowGrad.addColorStop(0.5, `rgba(80, 40, 160, ${ga * 0.4})`);
+            glowGrad.addColorStop(1, 'transparent');
+            ctx.fillStyle = glowGrad;
+            ctx.beginPath();
+            ctx.arc(center.x, center.y, glowSize, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.003;
+
+            const speed = audioPlaying ? 0.012 : 0.003;
+            const amplitude = audioPlaying ? 0.18 : 0.08;
+
+            for (let i = 0; i < posAttr.count; i++) {
+                const ix = i * 3;
+                const bx = basePositions[ix];
+                const by = basePositions[ix + 1];
+                const bz = basePositions[ix + 2];
+
+                const n = noise3D(bx * 1.5 + time * 4, by * 1.5 + time * 3, bz * 1.5 + time * 2);
+                const displacement = 1 + n * amplitude;
+
+                posAttr.array[ix] = bx * displacement;
+                posAttr.array[ix + 1] = by * displacement;
+                posAttr.array[ix + 2] = bz * displacement;
+            }
+            posAttr.needsUpdate = true;
+            geo.computeVertexNormals();
+
+            mesh.rotation.y += speed;
+            mesh.rotation.x += speed * 0.3;
+
+            // Color shift
+            const hue = (Math.sin(time * 0.5) * 0.1) + 0.72;
+            mat.color.setHSL(hue, 0.6, 0.25);
+            mat.emissive.setHSL(hue, 0.8, 0.1);
+
+            renderer.render(scene, camera);
+            drawEffects();
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            resizeStreak();
+        });
+    })();
     </script>
 
 </body>
