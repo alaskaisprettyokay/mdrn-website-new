@@ -3,123 +3,521 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MDRN music</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>MDRN — Infrastructure for Underground Music</title>
     <link rel="icon" href="images/favicon/favicon.ico">
-    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0a0a0e;
+            --text: #d4d4d8;
+            --text-bright: #fafafa;
+            --text-dim: #71717a;
+            --mono: 'Space Mono', monospace;
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* ── Ambient ── */
+        .ambient {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            mix-blend-mode: screen;
+        }
+
+        .orb-1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(99, 50, 200, 0.3), transparent 70%);
+            top: -100px; left: -100px;
+            animation: drift1 30s infinite ease-in-out alternate;
+        }
+
+        .orb-2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(200, 60, 30, 0.2), transparent 70%);
+            bottom: 10%; right: -150px;
+            animation: drift2 25s infinite ease-in-out alternate;
+        }
+
+        @keyframes drift1 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(120px, 80px); }
+        }
+        @keyframes drift2 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-80px, -60px); }
+        }
+
+        /* ── Audio bar ── */
+        .audio-bar {
+            position: fixed;
+            top: 16px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(10, 10, 14, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 40px;
+            padding: 6px 16px 6px 6px;
+        }
+
+        .play-btn {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: none;
+            color: var(--text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: 0.15s;
+        }
+
+        .play-btn:hover { background: rgba(255,255,255,0.08); }
+
+        .now-playing {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            display: inline-block;
+            width: 5px; height: 5px;
+            background: #ef4444;
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* ── Layout ── */
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 100px 0 80px;
+        }
+
+        .hero .logo {
+            max-width: 360px;
+            width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .hero .sub {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 48px;
+        }
+
+        .hero .pitch {
+            font-size: clamp(1.4rem, 3.5vw, 2rem);
+            font-weight: 400;
+            line-height: 1.4;
+            color: var(--text-bright);
+            max-width: 580px;
+        }
+
+        .hero .pitch .hl {
+            color: #a78bfa;
+        }
+
+        .hero-links {
+            margin-top: 40px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-links a {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--text);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 6px;
+            transition: 0.15s;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-links a:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.25);
+        }
+
+        /* ── Body sections ── */
+        .section {
+            padding: 80px 0;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .section-label {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+        }
+
+        /* ── Manifesto ── */
+        .manifesto h2 {
+            font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 32px;
+            line-height: 1.25;
+        }
+
+        .manifesto p {
+            font-size: 1.05rem;
+            color: var(--text);
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .manifesto strong {
+            color: var(--text-bright);
+            font-weight: 500;
+        }
+
+        /* ── Projects ── */
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .project {
+            padding: 32px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .project:last-child { border-bottom: none; }
+
+        .project-name {
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: 0.5px;
+        }
+
+        .project-name a {
+            color: var(--text-bright);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            transition: 0.15s;
+        }
+
+        .project-name a:hover {
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .project-type {
+            font-family: var(--mono);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        .project-desc {
+            font-size: 0.95rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── CTA ── */
+        .cta {
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .cta h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+        }
+
+        .cta .note {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 24px;
+        }
+
+        .email-row {
+            display: flex;
+            gap: 8px;
+            max-width: 400px;
+        }
+
+        .email-row input {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-family: var(--mono);
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03);
+            color: var(--text);
+            outline: none;
+        }
+
+        .email-row input::placeholder { color: var(--text-dim); font-family: var(--mono); }
+        .email-row input:focus { border-color: rgba(255,255,255,0.25); }
+
+        .email-row button {
+            padding: 12px 18px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: none;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.15s;
+        }
+
+        .email-row button:hover {
+            background: var(--text-bright);
+            color: var(--bg);
+        }
+
+        .confirmation {
+            font-family: var(--mono);
+            font-size: 12px;
+            color: #a78bfa;
+            margin-top: 12px;
+            display: none;
+        }
+
+        /* ── Footer ── */
+        .foot {
+            padding: 40px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .foot-copy {
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+
+        .foot-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .foot-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.15s;
+        }
+
+        .foot-links a:hover { color: var(--text); }
+
+        /* ── Responsive ── */
+        @media (max-width: 600px) {
+            .project {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .hero-links {
+                flex-direction: column;
+            }
+
+            .hero-links a {
+                text-align: center;
+            }
+
+            .email-row {
+                flex-direction: column;
+            }
+
+            .foot {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <div class="header">
-        <nav class="nav-bar">
-            <div class="audio-player">
-                <audio id="audio" src="audio/f2-ride-party.mp3"></audio>
-                <button id="play-pause" class="btn"><i class="fas fa-play"></i></button>
-            </div>
-        </nav>
+
+    <div class="ambient">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
     </div>
 
-    <div class="background">
-        <div class="circle circle1"></div>
-        <div class="circle circle2"></div>
-        <div class="circle circle3"></div>
-        <div class="circle circle4"></div>
-    </div>
-    
-    <main>
-        <section class="hero-section">
-            <div class="hero-container">
-                <h1>
-                    <img src="./images/MDRNwhite.svg" alt="MDRN Music - Massively Distributed Radio Network" class="logo">
-                </h1>
-                <h2 class="hero-title">Massively Distributed </br> Radio Network</h2>
-                <h3>Decentralized internet radio</h3>
-                <h3>Web3 music curation platform</h3>
-                &nbsp;
-                <h4>Get early access to MDRN</h4>
-                <form action="https://mdrn.us11.list-manage.com/subscribe/post?u=68c915cbb592d293d6023eb24&amp;id=0f8a121b6b&amp;f_id=007c05e1f0" method="post" id="email-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
-                    <div class="email-container">
-                        <input type="email" name="EMAIL" placeholder="Join the waitlist" class="email-input" required>
-                        <button type="submit" class="send-button">
-                            <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </div>
-                </form>
-                <div id="confirmation-text" class="confirmation-text hidden">Talk to you soon...</div>
-                
-                &nbsp;
-                <div class="social-buttons">
-                    <a href="https://x.com/mdrnprotocol" target="_blank" class="btn lg neu">
-                        <i class="twitter-x-icon"></i>
-                    </a>
-                    <a href="mailto:info@mdrn.music" target="_blank" class="btn lg neu">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <!--
-                    <a href="https://t.me/+Qa8B7XB1zs5mODhh" target="_blank" class="btn lg neu">
-                        <i class="fab fa-telegram-plane"></i>
-                    </a>
-                    -->
-                </div>
-            </div>
-
-            <div class="content-wrapper">
-            <!--
-            <section class="feature-section" id="about-us">
-                <div class="feature-content">
-                    <div class="text-content">
-                        <h2>Decentralized streaming with transparent royalty payouts</h2>
-                    </div>
-                    <div class="image-content">
-                        <img src="./images/android-report.png" alt="Report" class="feature-img">
-                    </div>
-                </div>
-            </section>
-
-            <section class="feature-section reverse">
-                <div class="feature-content">
-                    <div class="text-content">
-                        <h2>Community tools</h2>
-                        <ul>
-                            <li>Connect directly with your favorite artists or your audience</li>
-                            <li>Create your own radio station</li>
-                            <li>Live chat with artists, djs, and curators</li>
-                            <li>Decentralized Radio Stations</li>
-                        </ul>
-                    </div>
-                    <div class="image-content">
-                        <img src="./images/Android-chat.png" alt="Decentralized Streaming" class="feature-img">
-                    </div>
-                </div>
-            </section>
-
-
-            <section class="feature-section ">
-                <div class="feature-content">
-                    <div class="text-content">
-                        <h2>Fund creation of new music and share royalties</h2>
-                    </div>
-                    <div class="image-content">
-                        <img src="./images/android-proposals.png" alt="Proposal" class="feature-img">
-                    </div>
-                </div>
-            </section>
-            -->
-        </section>
-    
-
-        <footer class="footer">
-        <div class="footer-container">
-            <h3>© 2024 MDRN all rights reserved.</h3>
+    <div class="audio-bar">
+        <audio id="audio" src="audio/f2-ride-party.mp3"></audio>
+        <button class="play-btn" id="play-pause">
+            <i class="fas fa-play" id="play-icon"></i>
+        </button>
+        <div class="now-playing">
+            <span class="live-dot"></span>Listen
         </div>
-    </footer>
-    </main>
+    </div>
 
-<script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-<script src="script.js"></script>
+    <div class="page">
+
+        <section class="hero">
+            <img src="./images/MDRNwhite.svg" alt="MDRN" class="logo">
+            <div class="sub">Infrastructure for underground music</div>
+            <p class="pitch">
+                We build tools that help <span class="hl">scenes sustain themselves</span> — so the money flows to artists and curators, not platforms.
+            </p>
+            <div class="hero-links">
+                <a href="https://app.subcult.music">Try Subcult →</a>
+                <a href="https://getonda.org">Onda Protocol →</a>
+            </div>
+        </section>
+
+        <section class="section manifesto">
+            <div class="section-label">Why</div>
+            <h2>Music is not content.</h2>
+            <p>
+                The current system treats music like inventory. Infinite catalog, algorithmic playlists, fractions of a penny per stream. It works for major labels. It fails everyone else.
+            </p>
+            <p>
+                <strong>Scenes create culture.</strong> DJs, radio hosts, label heads, dedicated listeners — human networks that find, champion, and sustain the music that matters. Their work has value. They deserve to get paid for it.
+            </p>
+            <p>
+                We're not building another streaming platform. We're building the infrastructure that lets underground music communities fund themselves.
+            </p>
+        </section>
+
+        <section class="section">
+            <div class="section-label">What we're building</div>
+            <div class="projects">
+                <div class="project">
+                    <div>
+                        <div class="project-name"><a href="https://app.subcult.music">Subcult</a></div>
+                        <div class="project-type">Product</div>
+                    </div>
+                    <div class="project-desc">
+                        Curated music communities with integrated streaming and direct payments. Record store, radio station, and venue — one place. Curators get paid for the work they already do.
+                    </div>
+                </div>
+                <div class="project">
+                    <div>
+                        <div class="project-name"><a href="https://getonda.org">Onda</a></div>
+                        <div class="project-type">Protocol</div>
+                    </div>
+                    <div class="project-desc">
+                        On-chain micropayment rails. Every play splits revenue between the artist, the curator who surfaced the track, and the community. No 30% platform cut.
+                    </div>
+                </div>
+                <div class="project">
+                    <div>
+                        <div class="project-name">MDRN Radio</div>
+                        <div class="project-type">Network</div>
+                    </div>
+                    <div class="project-desc">
+                        Federated internet radio. Any community can run a station. Every station pays its curators and artists. Global distribution, local control.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h3>Get early access</h3>
+            <p class="note">We're onboarding curators, radio stations, and independent labels.</p>
+            <form class="email-row" action="https://mdrn.us11.list-manage.com/subscribe/post?u=68c915cbb592d293d6023eb24&amp;id=0f8a121b6b&amp;f_id=007c05e1f0" method="post" id="email-form" target="_blank" novalidate>
+                <input type="email" name="EMAIL" placeholder="your@email.com" required>
+                <button type="submit">→</button>
+            </form>
+            <div class="confirmation" id="confirmation">We'll be in touch.</div>
+        </section>
+
+        <div class="foot">
+            <div class="foot-copy">© 2026 MDRN</div>
+            <div class="foot-links">
+                <a href="https://x.com/mdrnprotocol" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                <a href="mailto:info@mdrn.music"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const playBtn = document.getElementById('play-pause');
+        const playIcon = document.getElementById('play-icon');
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) { audio.play(); playIcon.className = 'fas fa-pause'; }
+            else { audio.pause(); playIcon.className = 'fas fa-play'; }
+        });
+        document.getElementById('email-form').addEventListener('submit', () => {
+            setTimeout(() => {
+                document.getElementById('confirmation').style.display = 'block';
+                document.getElementById('email-form').style.display = 'none';
+            }, 500);
+        });
+    </script>
+
 </body>
-
 </html>
