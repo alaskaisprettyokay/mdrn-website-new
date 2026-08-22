@@ -471,11 +471,11 @@
         <section class="cta">
             <h3>Get early access</h3>
             <p class="note">We're onboarding curators, radio stations, and independent labels.</p>
-            <form class="email-row" action="https://mdrn.us11.list-manage.com/subscribe/post?u=68c915cbb592d293d6023eb24&amp;id=0f8a121b6b&amp;f_id=007c05e1f0" method="post" id="email-form" target="_blank" novalidate>
-                <input type="email" name="EMAIL" placeholder="your@email.com" required>
+            <form class="email-row" action="/api/subscribe" method="post" id="email-form">
+                <input type="email" name="email" autocomplete="email" inputmode="email" placeholder="your@email.com" required>
                 <button type="submit">→</button>
             </form>
-            <div class="confirmation" id="confirmation">We'll be in touch.</div>
+            <div class="confirmation" id="confirmation" role="status" aria-live="polite">We'll be in touch.</div>
         </section>
 
         <div class="foot">
@@ -496,11 +496,37 @@
             if (audio.paused) { audio.play(); playIcon.className = 'fas fa-pause'; }
             else { audio.pause(); playIcon.className = 'fas fa-play'; }
         });
-        document.getElementById('email-form').addEventListener('submit', () => {
-            setTimeout(() => {
+        document.getElementById('email-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const button = form.querySelector('button');
+            const confirmation = document.getElementById('confirmation');
+            const email = String(new FormData(form).get('email') || '').trim().toLowerCase();
+
+            button.disabled = true;
+            confirmation.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || "couldn't join the list — please try again.");
+                }
+
                 document.getElementById('confirmation').style.display = 'block';
-                document.getElementById('email-form').style.display = 'none';
-            }, 500);
+                form.style.display = 'none';
+            } catch (error) {
+                confirmation.textContent = error instanceof Error
+                    ? error.message
+                    : "couldn't join the list — please try again.";
+                confirmation.style.display = 'block';
+                button.disabled = false;
+            }
         });
     </script>
 
