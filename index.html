@@ -518,7 +518,8 @@
                     throw new Error(result.error || "couldn't join the list — please try again.");
                 }
 
-                document.getElementById('confirmation').style.display = 'block';
+                confirmation.textContent = "We'll be in touch.";
+                confirmation.style.display = 'block';
                 form.style.display = 'none';
             } catch (error) {
                 confirmation.textContent = error instanceof Error
